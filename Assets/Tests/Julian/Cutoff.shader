@@ -5,7 +5,7 @@
 		_MainTex("Texture", 2D) = "white" {}
 		_TransitionTex("Transition Texture", 2D) = "white" {}
 		_Color("Undownloaded Color", Color) = (1,1,1,1)
-		_Cutoff("Cutoff", Range(0, 1)) = 0
+		_Cutoff("Percentage Downloaded", Range(0, 1)) = 0
 	}
 		SubShader
 		{
@@ -52,19 +52,15 @@
 
 		fixed4 frag(v2f i) : SV_Target
 		{
-			// sample the transition texture
+			// Sample the transition texture
 			fixed4 trans = tex2D(_TransitionTex, i.uv);
-
-			// sample the texture
-			fixed4 col = tex2D(_MainTex, i.uv);
 			
-			// Check if this part is loaded already
-			if (trans.b < _Cutoff)
-				return col = _Color;
+			// Don't display the part if it has not been downloaded already
+			if (trans.b >= _Cutoff)
+				return _Color;
 			
-			// apply fog
-			UNITY_APPLY_FOG(i.fogCoord, col);
-			return col;
+			// Return the sampled texture
+			return tex2D(_MainTex, i.uv);
 		}
 				ENDCG
 			}
