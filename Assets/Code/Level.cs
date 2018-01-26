@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Level : MonoBehaviour
 {
@@ -9,8 +10,7 @@ public class Level : MonoBehaviour
 	/// Height of one floor level.
 	/// </summary>
 	[Tooltip("Height of one floor level.")]
-	[SerializeField]
-	private float _floorHeight = 1f;
+	public float FloorHeight = 2f;
 	#endregion
 
 	#region Static Properties
@@ -44,7 +44,7 @@ public class Level : MonoBehaviour
 	/// <returns>Returns the floor level as an int.</returns>
 	public int ReturnFloorLevel(Vector2 position)
 	{
-		return Mathf.FloorToInt(position.y / _floorHeight);
+		return Mathf.FloorToInt(position.y / FloorHeight);
 	}
 	#endregion
 }

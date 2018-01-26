@@ -113,6 +113,48 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &1595131
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4111723348771994, guid: 4e73ca858aad72f43b22afef5fe20789, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 3.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111723348771994, guid: 4e73ca858aad72f43b22afef5fe20789, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111723348771994, guid: 4e73ca858aad72f43b22afef5fe20789, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111723348771994, guid: 4e73ca858aad72f43b22afef5fe20789, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111723348771994, guid: 4e73ca858aad72f43b22afef5fe20789, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111723348771994, guid: 4e73ca858aad72f43b22afef5fe20789, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111723348771994, guid: 4e73ca858aad72f43b22afef5fe20789, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111723348771994, guid: 4e73ca858aad72f43b22afef5fe20789, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4e73ca858aad72f43b22afef5fe20789, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &168803803
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3fec075791f56459bc43a4de125d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distance: 1
   _travelTime: 1
   _arrivalSound: {fileID: 8300000, guid: 202a32f049b423b4289a96d2a2afc89b, type: 3}
 --- !u!23 &1061541090

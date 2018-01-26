@@ -51,4 +51,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1120cd57a9e5519498681ec177bba0f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _floorHeight: 1
+  FloorHeight: 2

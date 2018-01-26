@@ -4,104 +4,97 @@ using UnityEngine;
 
 public class LiftMovement : MonoBehaviour
 {
-    #region SerializedFields
+	#region SerializedFields
+	/// <summary>
+	/// The time the lift should take to travel 1 floor
+	/// </summary>
+	[SerializeField]
+	private float _travelTime = 5.0f;
 
-    /// <summary>
-    /// The distance between two floors
-    /// </summary>
-    [SerializeField]
-    private float _distance = 5.0f;
+	[SerializeField]
+	private AudioClip _arrivalSound = null;
 
-    /// <summary>
-    /// The time the lift should take to travel 1 floor
-    /// </summary>
-    [SerializeField]
-    private float _travelTime = 5.0f;
+	#endregion
 
-    [SerializeField]
-    private AudioClip _arrivalSound = null;
+	#region Fields
 
-    #endregion
+	/// <summary>
+	/// Is the lift moving?
+	/// </summary>
+	private bool _isMoving = false;
 
-    #region Fields
+	private AudioSource _audioSource;
 
-    /// <summary>
-    /// Is the lift moving?
-    /// </summary>
-    private bool _isMoving = false;
+	#endregion
 
-    private AudioSource _audioSource;
+	#region Life Cycle
 
-    #endregion
+	private void Awake()
+	{
+		_audioSource = GetComponent<AudioSource>();
+	}
 
-    #region Life Cycle
+	private void Update()
+	{
+		// If the lift is moving, ignore all input
+		if (_isMoving)
+			return;
 
-    private void Awake()
-    {
-        _audioSource = GetComponent<AudioSource>();
-    }
+		// Check if the player wants the lift to go up or down
+		if (Input.GetKeyDown(KeyCode.UpArrow))
+		{
+			StartCoroutine(Move());
+		}
+		else if (Input.GetKeyDown(KeyCode.DownArrow))
+		{
+			StartCoroutine(Move(false));
+		}
+	}
 
-    private void Update()
-    {
-        // If the lift is moving, ignore all input
-        if (_isMoving)
-            return;
+	#endregion
 
-        // Check if the player wants the lift to go up or down
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            StartCoroutine(Move());
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            StartCoroutine(Move(false));
-        }
-    }
+	#region Methods
 
-    #endregion
+	/// <summary>
+	/// Move the lift one floor.
+	/// </summary>
+	/// <param name="up">Move the lift up if true, down if false.</param>
+	private IEnumerator Move(bool up = true)
+	{
+		// Mark the lift as moving
+		_isMoving = true;
 
-    #region Methods
+		// Save the initial position
+		float initialPosition = transform.position.y;
 
-    /// <summary>
-    /// Move the lift one floor.
-    /// </summary>
-    /// <param name="up">Move the lift up if true, down if false.</param>
-    private IEnumerator Move(bool up = true)
-    {
-        // Mark the lift as moving
-        _isMoving = true;
+		// Calculate the destination
+		float destination = (up) ? initialPosition + Level.Instance.FloorHeight : initialPosition - Level.Instance.FloorHeight;
 
-        // Save the initial position
-        float initialPosition = transform.position.y;
+		// Time in seconds to complete the growth process
+		float time = Random.Range(1f, _travelTime);
 
-        // Calculate the destination
-        float destination = (up) ? initialPosition + _distance : initialPosition - _distance;
+		// Progress of the moving
+		float progress = 0f;
 
-        // Time in seconds to complete the growth process
-        float time = Random.Range(1f, _travelTime);
+		// Rate at which the lift should move
+		float rate = 1f / time;
 
-        // Progress of the moving
-        float progress = 0f;
+		// Gradually move the lift
+		while (progress < 1f)
+		{
+			progress += Time.deltaTime * rate;
+			float newPosition = Mathf.Lerp(initialPosition, destination, progress);
+			transform.position = new Vector3(transform.position.x, newPosition, transform.position.z);
+			yield return new WaitForEndOfFrame();
+		}
 
-        // Rate at which the lift should move
-        float rate = 1f / time;
+		// Moving is done
+		// mark the lift as stationary
+		_isMoving = false;
 
-        // Gradually move the lift
-        while (progress < 1f)
-        {
-            progress += Time.deltaTime * rate;
-            float newPosition = Mathf.Lerp(initialPosition, destination, progress);
-            transform.position = new Vector3(transform.position.x, newPosition, transform.position.z);
-            yield return new WaitForEndOfFrame();
-        }
+		// Play the arrival sound
+		AudioPlayer.Instance.Play(_arrivalSound);
+	}
 
-        // Moving is done
-        // mark the lift as stationary
-        _isMoving = false;
-
-        // Play the arrival sound
-        AudioPlayer.Instance.Play(_arrivalSound);
-    }
-
-    #endregion
+	#endregion
 }
