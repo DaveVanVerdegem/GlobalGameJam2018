@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiftMovement : MonoBehaviour
+public class Elevator : MonoBehaviour
 {
     #region SerializedFields
 
@@ -17,6 +17,10 @@ public class LiftMovement : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float _travelTime = 5.0f;
+
+    [Header("Audio")]
+    [SerializeField]
+    private AudioClip _elevatorMusic= null;
 
     [SerializeField]
     private AudioClip _arrivalSound = null;
@@ -71,20 +75,20 @@ public class LiftMovement : MonoBehaviour
         // Mark the lift as moving
         _isMoving = true;
 
+        // Play the elevator music
+        AudioPlayer.MusicSource.PlayOneShot(_elevatorMusic);
+
         // Save the initial position
         float initialPosition = transform.position.y;
 
         // Calculate the destination
         float destination = (up) ? initialPosition + _distance : initialPosition - _distance;
 
-        // Time in seconds to complete the growth process
-        float time = Random.Range(1f, _travelTime);
-
         // Progress of the moving
         float progress = 0f;
 
         // Rate at which the lift should move
-        float rate = 1f / time;
+        float rate = 1f / _travelTime;
 
         // Gradually move the lift
         while (progress < 1f)
@@ -100,7 +104,10 @@ public class LiftMovement : MonoBehaviour
         _isMoving = false;
 
         // Play the arrival sound
-        AudioPlayer.Instance.Play(_arrivalSound);
+        AudioPlayer.EffectsSource.PlayOneShot(_arrivalSound);
+
+        // Stop playing the elevator music
+        AudioPlayer.MusicSource.Stop();
     }
 
     #endregion

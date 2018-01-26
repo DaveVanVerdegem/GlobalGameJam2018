@@ -15,29 +15,28 @@ public class AudioPlayer : MonoBehaviour
     }
 
     #endregion
-    #region Fields
+    #region Properties
 
-    private AudioSource _audioSource;
+    /// <summary>
+    /// The audio source from which the music will be played.
+    /// </summary>
+    public static AudioSource MusicSource;
+
+    /// <summary>
+    /// The audio source from which the effects will be played.
+    /// </summary>
+    public static AudioSource EffectsSource;
     #endregion
 
     #region Life Cycle
 
     private void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
+        MusicSource = GetComponents<AudioSource>()[0];
+        EffectsSource= GetComponents<AudioSource>()[1];
     }
 
     #endregion
 
-    #region Methods
 
-    /// <summary>
-    /// Plays the given sound clip
-    /// </summary>
-    public void Play(AudioClip clip)
-    {
-        _audioSource.PlayOneShot(clip);
-    }
-
-    #endregion
 }
