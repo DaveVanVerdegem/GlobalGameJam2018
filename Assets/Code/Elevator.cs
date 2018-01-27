@@ -20,7 +20,7 @@ public class Elevator : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField]
-    private AudioClip _elevatorMusic= null;
+    private AudioClip _elevatorMusic = null;
 
     [SerializeField]
     private AudioClip _arrivalSound = null;
@@ -39,11 +39,9 @@ public class Elevator : MonoBehaviour
     /// </summary>
     private Player _player = null;
 
-
     #endregion
 
     #region Life Cycle
-
 
     private void Update()
     {
@@ -67,7 +65,6 @@ public class Elevator : MonoBehaviour
         // Set the player reference
         if (other.CompareTag("Player"))
             _player = other.GetComponent<Player>();
-
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -75,10 +72,9 @@ public class Elevator : MonoBehaviour
         // Clear the player reference
         if (other.CompareTag("Player"))
         {
-            _player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;   
+            _player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             _player = null;
         }
-
     }
 
     #endregion
@@ -120,7 +116,6 @@ public class Elevator : MonoBehaviour
             progress += Time.deltaTime * rate;
             float newPosition = Mathf.Lerp(initialPosition, destination, progress);
             transform.position = new Vector3(transform.position.x, newPosition, transform.position.z);
-            //_player.transform.position = new Vector3(_player.transform.position.x, newPosition, _player.transform.position.z);
             yield return new WaitForEndOfFrame();
         }
 
