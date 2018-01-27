@@ -4,79 +4,107 @@ size: 512,128
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+Hidden_arm
+  rotate: true
+  xy: 406, 52
+  size: 23, 41
+  orig: 23, 41
+  offset: 0, 0
+  index: -1
+Hidden_arm_phone
+  rotate: false
+  xy: 393, 3
+  size: 49, 43
+  orig: 49, 43
+  offset: 0, 0
+  index: -1
+Hidden_body
+  rotate: true
+  xy: 444, 12
+  size: 38, 37
+  orig: 38, 37
+  offset: 0, 0
+  index: -1
+Hidden_head
+  rotate: true
+  xy: 99, 24
+  size: 102, 92
+  orig: 102, 92
+  offset: 0, 0
+  index: -1
 OldLady_arm
   rotate: true
-  xy: 2, 2
+  xy: 365, 48
   size: 27, 39
   orig: 27, 39
   offset: 0, 0
   index: -1
 OldLady_body
   rotate: false
-  xy: 293, 86
+  xy: 285, 4
   size: 58, 40
   orig: 58, 40
   offset: 0, 0
   index: -1
 OldLady_head
-  rotate: false
-  xy: 2, 31
+  rotate: true
+  xy: 2, 23
   size: 103, 95
   orig: 103, 95
   offset: 0, 0
   index: -1
 Slav_arm
   rotate: true
-  xy: 293, 63
+  xy: 449, 62
   size: 21, 38
   orig: 21, 38
   offset: 0, 0
   index: -1
 Slav_body
   rotate: false
-  xy: 404, 84
+  xy: 345, 2
   size: 46, 42
   orig: 46, 42
   offset: 0, 0
   index: -1
 Slav_head
-  rotate: false
-  xy: 211, 48
+  rotate: true
+  xy: 285, 46
   size: 80, 78
   orig: 80, 78
   offset: 0, 0
   index: -1
 arm
-  rotate: true
-  xy: 43, 6
+  rotate: false
+  xy: 483, 85
   size: 23, 41
   orig: 23, 41
   offset: 0, 0
   index: -1
 arm_phone
-  rotate: false
-  xy: 353, 79
+  rotate: true
+  xy: 365, 77
   size: 49, 47
   orig: 49, 47
   offset: 0, 0
   index: -1
 body
-  rotate: false
-  xy: 452, 89
+  rotate: true
+  xy: 414, 88
   size: 38, 37
   orig: 38, 37
   offset: 0, 0
   index: -1
 head
-  rotate: false
-  xy: 107, 36
+  rotate: true
+  xy: 193, 24
   size: 102, 90
   orig: 102, 90
   offset: 0, 0
   index: -1
 leg
   rotate: false
-  xy: 492, 109
+  xy: 2, 4
   size: 12, 17
   orig: 12, 17
   offset: 0, 0

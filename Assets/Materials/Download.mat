@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Download
   m_Shader: {fileID: 4800000, guid: c79f62937cf594a4dbfb5df8914b05dc, type: 3}
-  m_ShaderKeywords: USE_BLUR_TEXTURE _ALPHATEST_ON _EMISSION
+  m_ShaderKeywords: USE_BLUR_TEXTURE _ALPHATEST_ON _EMISSION _USEBLURTEX_ON
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -39,7 +39,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainBlurTex:
-        m_Texture: {fileID: 2800000, guid: 9f7089d62783a4b42b633f5f58c031af, type: 3}
+        m_Texture: {fileID: 2800000, guid: 59be39ef77b7db947b800efe4d7c45ab, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -86,7 +86,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _UseBlurTex: 0
+    - _UseBlurTex: 1
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 0, b: 0, a: 1}
