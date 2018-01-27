@@ -180,6 +180,7 @@ public class Enemy : MonoBehaviour
 			{
 				// Wait.
 				_idleTimer += Time.deltaTime;
+				_agent.Move(0);
 				return;
 			}
 

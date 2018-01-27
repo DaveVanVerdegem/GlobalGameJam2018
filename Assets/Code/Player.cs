@@ -136,10 +136,7 @@ public class Player : MonoBehaviour
 			return;
 
 		// Movement controls.
-		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
-		{
-			_agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
-		}
+		_agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
 
 		// Wifi controls.
 		if (Input.GetButtonUp("Connect"))
