@@ -4,40 +4,39 @@ using UnityEngine;
 
 public class AudioPlayer : MonoBehaviour
 {
-	#region Singleton
+    #region Singleton
 
-	private static AudioPlayer _instance;
+    private static AudioPlayer _instance;
 
-	public static AudioPlayer Instance
-	{
-		get { return _instance ?? (_instance = FindObjectOfType<AudioPlayer>()); }
-		set { _instance = value; }
-	}
+    public static AudioPlayer Instance
+    {
+        get { return _instance ?? (_instance = FindObjectOfType<AudioPlayer>()); }
+        set { _instance = value; }
+    }
 
-	#endregion
-	#region Fields
+    #endregion
+    #region Properties
 
-	private AudioSource _audioSource;
-	#endregion
+    /// <summary>
+    /// The audio source from which the music will be played.
+    /// </summary>
+    public static AudioSource MusicSource;
 
-	#region Life Cycle
+    /// <summary>
+    /// The audio source from which the effects will be played.
+    /// </summary>
+    public static AudioSource EffectsSource;
+    #endregion
 
-	private void Awake()
-	{
-		_audioSource = GetComponent<AudioSource>();
-	}
+    #region Life Cycle
 
-	#endregion
+    private void Awake()
+    {
+        MusicSource = GetComponents<AudioSource>()[0];
+        EffectsSource= GetComponents<AudioSource>()[1];
+    }
 
-	#region Methods
+    #endregion
 
-	/// <summary>
-	/// Plays the given sound clip
-	/// </summary>
-	public void Play(AudioClip clip)
-	{
-		_audioSource.PlayOneShot(clip);
-	}
 
-	#endregion
 }
