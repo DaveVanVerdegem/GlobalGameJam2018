@@ -15,12 +15,18 @@ public class Agent : MonoBehaviour
 	#endregion
 
 	#region Fields
+	/// <summary>
+	/// The sprite renderer of the player
+	/// </summary>
+	private SpriteRenderer _spriteRenderer = null;
 	#endregion
 
 	#region Life Cycle
 	// Use this for initialization
 	private void Awake()
 	{
+		// Get the needed components.
+		_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 	}
 
 	// Update is called once per frame
@@ -37,6 +43,9 @@ public class Agent : MonoBehaviour
 	public void Move(float direction)
 	{
 		transform.Translate(Vector2.right * direction * _speed);
+
+		// Have the agent face the direction it's moving in.
+		_spriteRenderer.flipX = (Input.GetAxis("Horizontal") <= 0);
 	}
 	#endregion
 }
