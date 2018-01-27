@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 
 public class Hotspot : MonoBehaviour
@@ -31,6 +33,13 @@ public class Hotspot : MonoBehaviour
     [Tooltip("Penalty per floor different from the hotspots floor.")]
     [SerializeField]
     private float _floorPenalty = .4f;
+
+    /// <summary>
+    /// The time in seconds that it takes to complete one pulse.
+    /// </summary>
+    [SerializeField]
+    private float _signalPulseSpeed = 3.0f;
+
     #endregion
 
     #region Static Properties
@@ -54,6 +63,12 @@ public class Hotspot : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float _availableData = 1f;
+
+    /// <summary>
+    /// The ratio for scale of the sprite renderer object when the sprite has reached the boundaries.
+    /// </summary>
+    [SerializeField]
+    private float _maxScaleRatio = 17f / 5f;
     #endregion
 
     #region Fields
@@ -62,9 +77,19 @@ public class Hotspot : MonoBehaviour
     /// </summary>
     private int _floorLevel;
 
+    /// <summary>
+    /// The sprite renderers of this object.
+    /// </summary>
+    private List<SpriteRenderer> _spriteRenderers = null;
+
     #endregion
 
     #region Life Cycle
+
+    private void Awake()
+    {
+        _spriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
+    }
     // Use this for initialization
     private void Start()
     {
@@ -74,6 +99,10 @@ public class Hotspot : MonoBehaviour
 
         // Set the floor for this hotspot.
         _floorLevel = Level.Instance.ReturnFloorLevel(transform.position);
+
+        // Visualise the pulses
+        for (int i = 0; i < _spriteRenderers.Count; ++i)
+            StartCoroutine(PulseSignal(_spriteRenderers[i], 0.3f * i));
     }
 
     // Update is called once per frame
@@ -128,13 +157,13 @@ public class Hotspot : MonoBehaviour
     public float ReturnSignalStrength(Player player)
     {
         // Get signal strength.
-		float distance = Vector2.Distance(transform.position, player.transform.position);
+        float distance = Vector2.Distance(transform.position, player.transform.position);
 
-		// Return no signal if the hotspot is out of range.
-		if (distance > Range)
-			return 0;
+        // Return no signal if the hotspot is out of range.
+        if (distance > Range)
+            return 0;
 
-		float signalStrength = _signalStrength.Evaluate((Range - distance) / Range);
+        float signalStrength = _signalStrength.Evaluate((Range - distance) / Range);
 
         int floorDifference = Mathf.Abs(Level.Instance.ReturnFloorLevel(player.transform.position) - _floorLevel);
 
@@ -162,6 +191,38 @@ public class Hotspot : MonoBehaviour
         hotspotsInRange.RemoveAll(hotspot => Vector2.Distance(player.transform.position, hotspot.transform.position) > hotspot.Range);
 
         return hotspotsInRange;
+    }
+    #endregion
+
+    #region Coroutines
+
+    private IEnumerator PulseSignal(SpriteRenderer targetRenderer, float progressOffset)
+    {
+        float progress = progressOffset;
+        float rate = 1f / _signalPulseSpeed;
+        float targetScale = Range * _maxScaleRatio;
+
+        // Infinite loop to keep pulsing
+        for (;;)
+        {
+            while (progress < 1.0f)
+            {
+                progress += Time.deltaTime * rate;
+
+                // Update the scale of the spriterenderer
+                float scale = Mathf.Lerp(0, targetScale, progress);
+                targetRenderer.transform.localScale = new Vector3(scale, scale, scale);
+
+                // Fade the opacity
+                float opacity = Mathf.Lerp(1f, 0f, progress);
+                targetRenderer.color = new Color(targetRenderer.color.r, targetRenderer.color.g, targetRenderer.color.b, opacity);
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            // Once finished, reset the progress
+            progress = 0f;
+        }
     }
     #endregion
 }
