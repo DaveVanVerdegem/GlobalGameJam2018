@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114563018276974226}
   - component: {fileID: 212126589199213150}
   - component: {fileID: 61193442303110340}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HideableObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
