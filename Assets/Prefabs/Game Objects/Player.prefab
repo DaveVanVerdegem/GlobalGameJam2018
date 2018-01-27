@@ -366,6 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _downloadMaterial: {fileID: 2100000, guid: 7624d611bd330e44b80ef65275598a16, type: 2}
   _signalStrengthIcon: {fileID: 0}
+  _interactableIcon: {fileID: 0}
   Floor: 3
   NearbyHideableObject: {fileID: 0}
   Hidden: 0
