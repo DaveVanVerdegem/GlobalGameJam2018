@@ -15,6 +15,11 @@ public class Player : MonoBehaviour
 	/// Lists of the hotspots in range of this player.
 	/// </summary>
 	private List<Hotspot> _hotspotsInRange = new List<Hotspot>();
+
+	/// <summary>
+	/// Hotspot that the player is currently connected to.
+	/// </summary>
+	private Hotspot _connectedHotspot;
 	#endregion
 
 	#region Life Cycle
@@ -28,25 +33,78 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
-		// Handle the inputs.
-		Inputs();
-
 		// Get all the hotspots in range of this player.
 		_hotspotsInRange = Hotspot.ReturnHotspotsInRange(this);
 
-		if (_hotspotsInRange.Count > 0)
-			// Get data from first hot spot.
-			Debug.Log(string.Format("Got {0} of data from hotspot.", _hotspotsInRange[0].ReturnData(this)));
+		// Handle the inputs.
+		Inputs();
+
+		if (_connectedHotspot != null)
+		{
+			// Disconnect if the hotspot is drained.
+			if (_connectedHotspot.Drained)
+				_connectedHotspot = null;
+			else
+			{
+				// Get data from the connected hot spot.
+				Debug.Log(string.Format("Getting {0} of data.", _connectedHotspot.ReturnData(this)));
+			}
+		}
 	}
 	#endregion
 
 	#region Methods
 	private void Inputs()
 	{
+		// Movement controls.
 		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
 		{
 			_agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
 		}
+
+		// Wifi controls.
+		if (Input.GetButtonUp("Connect"))
+		{
+			_connectedHotspot = ReturnBestAvailableHotspot();
+
+			if (_connectedHotspot != null)
+				Debug.Log(string.Format("Connected to hot spot."));
+		}
+	}
+	#endregion
+
+	#region Returns
+	/// <summary>
+	/// Get the strongest hotspot in range of this player.
+	/// </summary>
+	/// <returns>Returns a hotspot.</returns>
+	private Hotspot ReturnBestAvailableHotspot()
+	{
+		// No hotspots in range.
+		if (_hotspotsInRange.Count == 0)
+			return null;
+
+		// Get strongest hot spot in range.
+		Hotspot strongestHotspot = null;
+
+		for (int i = 0; i < _hotspotsInRange.Count; i++)
+		{
+			// Skip drained hotspots.
+			if (_hotspotsInRange[i].Drained)
+				continue;
+
+			if (strongestHotspot == null)
+			{
+				strongestHotspot = _hotspotsInRange[i];
+			}
+			else
+			{
+				if (_hotspotsInRange[i].ReturnSignalStrength(this) > strongestHotspot.ReturnSignalStrength(this))
+					strongestHotspot = _hotspotsInRange[i];
+			}
+		}
+
+		return strongestHotspot;
 	}
 	#endregion
 }
