@@ -40,6 +40,18 @@ public class Hotspot : MonoBehaviour
     [SerializeField]
     private float _signalPulseSpeed = 3.0f;
 
+    [Header("Colors")]
+    /// <summary>
+    /// The color when the bandwidth is at the lowest.
+    /// </summary>
+    [SerializeField]
+    private Color _minimumBandwidthColor = Color.red;
+
+    /// <summary>
+    /// The color when the bandwidth is at the highest.
+    /// </summary>
+    [SerializeField]
+    private Color _maximumBandwidthColor = Color.green;
     #endregion
 
     #region Static Properties
@@ -68,7 +80,7 @@ public class Hotspot : MonoBehaviour
     /// The ratio for scale of the sprite renderer object when the sprite has reached the boundaries.
     /// </summary>
     [SerializeField]
-    private float _maxScaleRatio = 17f / 5f;
+    private float _maxScaleRatio = 17.3f / 5f;
     #endregion
 
     #region Fields
@@ -103,6 +115,13 @@ public class Hotspot : MonoBehaviour
         // Visualise the pulses
         for (int i = 0; i < _spriteRenderers.Count; ++i)
             StartCoroutine(PulseSignal(_spriteRenderers[i], 0.3f * i));
+
+        // Determine the color according to the bandwidth and update the spriterenderers
+        if (_bandwidth < 0 || _bandwidth > 1f)
+            Debug.LogWarning(string.Format("Bandwidth should be normalised! ({0})", _bandwidth));
+
+        Color bandwithColor = Color.Lerp(_minimumBandwidthColor, _maximumBandwidthColor, _bandwidth);
+        _spriteRenderers.ForEach(x => x.color = bandwithColor);
     }
 
     // Update is called once per frame
