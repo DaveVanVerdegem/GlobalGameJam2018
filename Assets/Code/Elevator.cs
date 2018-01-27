@@ -25,6 +25,16 @@ public class Elevator : MonoBehaviour
     [SerializeField]
     private AudioClip _arrivalSound = null;
 
+    [SerializeField]
+    private ElevatorShaft _elevatorShaft = null;
+
+    #endregion
+
+    #region Properties
+    /// <summary>
+    /// The floor the elevator is on.
+    /// </summary>
+    public int Floor = 0;
     #endregion
 
     #region Fields
@@ -52,11 +62,11 @@ public class Elevator : MonoBehaviour
         // Check if the player wants the lift to go up or down
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            StartCoroutine(Move());
+            StartCoroutine(Move(true, true));
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            StartCoroutine(Move(false));
+            StartCoroutine(Move(false, true));
         }
     }
 
@@ -85,18 +95,21 @@ public class Elevator : MonoBehaviour
     /// Move the lift one floor.
     /// </summary>
     /// <param name="up">Move the lift up if true, down if false.</param>
-    private IEnumerator Move(bool up = true)
+    public IEnumerator Move(bool up, bool movePlayer)
     {
-        // Put the player on the elevator and disable his movement
-        _player.Freeze();
-        _player.transform.SetParent(transform);
-        _player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-
         // Mark the lift as moving
         _isMoving = true;
 
-        // Play the elevator music
-        AudioPlayer.MusicSource.PlayOneShot(_elevatorMusic);
+        // Put the player on the elevator and disable his movement
+        if (movePlayer)
+        {
+            _player.Freeze();
+            _player.transform.SetParent(transform);
+            _player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
+            // Play the elevator music
+            AudioPlayer.MusicSource.PlayOneShot(_elevatorMusic);
+        }
 
         // Save the initial position
         float initialPosition = transform.position.y;
@@ -123,15 +136,27 @@ public class Elevator : MonoBehaviour
         // mark the lift as stationary
         _isMoving = false;
 
-        // Play the arrival sound
-        AudioPlayer.EffectsSource.PlayOneShot(_arrivalSound);
+        // Increment the elevator floor
+        Floor = (up) ? Floor + 1 : Floor - 1;
 
-        // Stop playing the elevator music
-        AudioPlayer.MusicSource.Stop();
+        if (movePlayer)
+        {
+            // Play the arrival sound
+            AudioPlayer.EffectsSource.PlayOneShot(_arrivalSound);
 
-        // Release the player from the elevator
-        _player.Freeze(false);
-        _player.transform.SetParent(null);
+            // Stop playing the elevator music
+            AudioPlayer.MusicSource.Stop();
+
+            // Release the player from the elevator
+            _player.Freeze(false);
+            _player.transform.SetParent(null);
+
+            // Increment the player floor
+            _player.Floor = (up) ? _player.Floor + 1 : _player.Floor - 1;
+        }
+
+        // Update the doors
+        _elevatorShaft.UpdateDoorColliders();
     }
 
     #endregion
