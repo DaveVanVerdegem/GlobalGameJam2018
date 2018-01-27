@@ -4,126 +4,130 @@ using UnityEngine;
 
 public class Hotspot : MonoBehaviour
 {
-	#region Inspector Fields
-	/// <summary>
-	/// Range of this wifi hotspot.
-	/// </summary>
-	[Tooltip("Range of this wifi hotspot.")]
-	public float Range = 5f;
+    #region Inspector Fields
+    /// <summary>
+    /// Range of this wifi hotspot.
+    /// </summary>
+    [Tooltip("Range of this wifi hotspot.")]
+    public float Range = 5f;
 
-	/// <summary>
-	/// Strength of the signal depending on the distance from the hotspot.
-	/// </summary>
-	[Tooltip("Strength of the signal depending on the distance from the hotspot.")]
-	[SerializeField]
-	private AnimationCurve _signalStrength = null;
+    /// <summary>
+    /// Strength of the signal depending on the distance from the hotspot.
+    /// </summary>
+    [Tooltip("Strength of the signal depending on the distance from the hotspot.")]
+    [SerializeField]
+    private AnimationCurve _signalStrength = null;
 
-	/// <summary>
-	/// Bandwidth for this hotspot. Defines how fast this hotspot sends data.
-	/// </summary>
-	[Tooltip("Bandwidth for this hotspot. Defines how fast this hotspot sends data.")]
-	[SerializeField]
-	private float _bandwidth = .1f;
+    /// <summary>
+    /// Bandwidth for this hotspot. Defines how fast this hotspot sends data.
+    /// </summary>
+    [Tooltip("Bandwidth for this hotspot. Defines how fast this hotspot sends data.")]
+    [SerializeField]
+    private float _bandwidth = .1f;
 
-	/// <summary>
-	/// Penalty per floor different from the hotspots floor.
-	/// </summary>
-	[Tooltip("Penalty per floor different from the hotspots floor.")]
-	[SerializeField]
-	private float _floorPenalty = .4f;
-	#endregion
+    /// <summary>
+    /// Penalty per floor different from the hotspots floor.
+    /// </summary>
+    [Tooltip("Penalty per floor different from the hotspots floor.")]
+    [SerializeField]
+    private float _floorPenalty = .4f;
+    #endregion
 
-	#region Static Properties
-	/// <summary>
-	/// List of all the hotspots in the scene.
-	/// </summary>
-	public static List<Hotspot> Hotspots = new List<Hotspot>();
-	#endregion
+    #region Static Properties
+    /// <summary>
+    /// List of all the hotspots in the scene.
+    /// </summary>
+    public static List<Hotspot> Hotspots = new List<Hotspot>();
+    #endregion
 
-	#region Properties
-	/// <summary>
-	/// True when all the available data on this hotspot has been used.
-	/// </summary>
-	[HideInInspector]
-	public bool Drained = false;
-	#endregion
+    #region Properties
+    /// <summary>
+    /// True when all the available data on this hotspot has been used.
+    /// </summary>
+    [HideInInspector]
+    public bool Drained = false;
+    #endregion
 
-	#region Fields
-	/// <summary>
-	/// Floor that this hotspot is on.
-	/// </summary>
-	private int _floorLevel;
+    #region Serialized Fields
+    /// <summary>
+    /// Data still remaining on this hotspot.
+    /// </summary>
+    [SerializeField]
+    private float _availableData = 1f;
+    #endregion
 
-	/// <summary>
-	/// Data still remaining on this hotspot.
-	/// </summary>
-	private float _availableData = 1f;
-	#endregion
+    #region Fields
+    /// <summary>
+    /// Floor that this hotspot is on.
+    /// </summary>
+    private int _floorLevel;
 
-	#region Life Cycle
-	// Use this for initialization
-	private void Start()
-	{
-		// Add the hot spot to the scene list.
-		if (!Hotspots.Contains(this))
-			Hotspots.Add(this);
+    #endregion
 
-		// Set the floor for this hotspot.
-		_floorLevel = Level.Instance.ReturnFloorLevel(transform.position);
-	}
+    #region Life Cycle
+    // Use this for initialization
+    private void Start()
+    {
+        // Add the hot spot to the scene list.
+        if (!Hotspots.Contains(this))
+            Hotspots.Add(this);
 
-	// Update is called once per frame
-	private void Update()
-	{
-	}
+        // Set the floor for this hotspot.
+        _floorLevel = Level.Instance.ReturnFloorLevel(transform.position);
+    }
 
-	private void OnDisable()
-	{
-		// Clear the static list.
-		Hotspots.Clear();
-	}
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 
-	private void OnDrawGizmos()
-	{
-		Gizmos.color = Color.green;
-		Gizmos.DrawWireSphere(transform.position, Range);
-	}
-	#endregion
+    private void OnDisable()
+    {
+        // Clear the static list.
+        Hotspots.Clear();
+    }
 
-	#region Returns
-	/// <summary>
-	/// Returns the data that this hotspot can send to the given player.
-	/// </summary>
-	/// <param name="player">Player to send data to.</param>
-	/// <returns>Returns the data as a float.</returns>
-	public float ReturnData(Player player)
-	{
-		float signalStrength = ReturnSignalStrength(player);
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, Range);
+    }
+    #endregion
 
-		// Calculate the transmitted data.
-		float transmittedData = signalStrength * _bandwidth;
+    #region Returns
+    /// <summary>
+    /// Returns the data that this hotspot can send to the given player.
+    /// </summary>
+    /// <param name="player">Player to send data to.</param>
+    /// <returns>Returns the data as a float.</returns>
+    public float ReturnData(Player player)
+    {
+        float signalStrength = ReturnSignalStrength(player);
 
-		// Make sure that the transmitted data doesn't exceed the available data.
-		if (transmittedData > _availableData)
-			transmittedData = _availableData;
+        // Calculate the transmitted data.
+        float transmittedData = signalStrength * _bandwidth;
 
-		// Remove the data from the available data.
-		_availableData -= transmittedData;
+        // Make sure that the transmitted data doesn't exceed the available data.
+        if (transmittedData > _availableData)
+            transmittedData = _availableData;
 
-		// Update the state of this hotspot.
-		Drained = (_availableData <= 0);
+        // Remove the data from the available data.
+        _availableData -= transmittedData;
 
-		return transmittedData;
-	}
+        // Update the state of this hotspot.
+        Drained = (_availableData <= 0);
 
-	/// <summary>
-	/// Returns the signal strength of this hotspot to the given player.
-	/// </summary>
-	/// <param name="player">Player to get signal strength for.</param>
-	/// <returns>Returns the signal strength as a float.</returns>
-	public float ReturnSignalStrength(Player player)
-	{
-		// Get signal strength.
+        return transmittedData;
+    }
+
+    /// <summary>
+    /// Returns the signal strength of this hotspot to the given player.
+    /// </summary>
+    /// <param name="player">Player to get signal strength for.</param>
+    /// <returns>Returns the signal strength as a float.</returns>
+    public float ReturnSignalStrength(Player player)
+    {
+        // Get signal strength.
 		float distance = Vector2.Distance(transform.position, player.transform.position);
 
 		// Return no signal if the hotspot is out of range.
@@ -132,32 +136,32 @@ public class Hotspot : MonoBehaviour
 
 		float signalStrength = _signalStrength.Evaluate((Range - distance) / Range);
 
-		int floorDifference = Mathf.Abs(Level.Instance.ReturnFloorLevel(player.transform.position) - _floorLevel);
+        int floorDifference = Mathf.Abs(Level.Instance.ReturnFloorLevel(player.transform.position) - _floorLevel);
 
-		// Apply floor penalty to signal strength.
-		signalStrength -= floorDifference * _floorPenalty;
+        // Apply floor penalty to signal strength.
+        signalStrength -= floorDifference * _floorPenalty;
 
-		// Clamp signal strength.
-		signalStrength = Mathf.Clamp01(signalStrength);
+        // Clamp signal strength.
+        signalStrength = Mathf.Clamp01(signalStrength);
 
-		return signalStrength;
-	}
-	#endregion
+        return signalStrength;
+    }
+    #endregion
 
-	#region Static Methods
-	/// <summary>
-	/// Returns all the hotspots in range of the given player.
-	/// </summary>
-	/// <param name="player">Player to get all the hotspots for.</param>
-	/// <returns>Returns al list of hotspots.</returns>
-	public static List<Hotspot> ReturnHotspotsInRange(Player player)
-	{
-		List<Hotspot> hotspotsInRange = new List<Hotspot>(Hotspots);
+    #region Static Methods
+    /// <summary>
+    /// Returns all the hotspots in range of the given player.
+    /// </summary>
+    /// <param name="player">Player to get all the hotspots for.</param>
+    /// <returns>Returns al list of hotspots.</returns>
+    public static List<Hotspot> ReturnHotspotsInRange(Player player)
+    {
+        List<Hotspot> hotspotsInRange = new List<Hotspot>(Hotspots);
 
-		// Remove all the hotspots that are too far from the player.
-		hotspotsInRange.RemoveAll(hotspot => Vector2.Distance(player.transform.position, hotspot.transform.position) > hotspot.Range);
+        // Remove all the hotspots that are too far from the player.
+        hotspotsInRange.RemoveAll(hotspot => Vector2.Distance(player.transform.position, hotspot.transform.position) > hotspot.Range);
 
-		return hotspotsInRange;
-	}
-	#endregion
+        return hotspotsInRange;
+    }
+    #endregion
 }
