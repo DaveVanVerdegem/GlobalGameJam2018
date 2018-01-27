@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ElevatorShaft : MonoBehaviour
 {
@@ -11,8 +12,15 @@ public class ElevatorShaft : MonoBehaviour
     [SerializeField]
     private Elevator _elevator = null;
 
+    /// <summary>
+    /// The text that displays the information for calling the elevator.
+    /// </summary>
+    [SerializeField]
+    private Text _elevatorCallingInfo = null;
+
     [SerializeField]
     private List<Collider2D> _floorElevatorColliders = null;
+
     #endregion
 
     #region Fields
@@ -45,16 +53,29 @@ public class ElevatorShaft : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Ignore everything but the player
+        if (!other.CompareTag("Player"))
+            return;
+
         // Set the player reference
-        if (other.CompareTag("Player"))
-            _player = other.GetComponent<Player>();
+        _player = other.GetComponent<Player>();
+
+        // Display the information if the elevator is not at the current floor
+        if (_elevator.Floor != _player.Floor)
+            _elevatorCallingInfo.enabled = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        // Ignore everything but the player
+        if (!other.CompareTag("Player"))
+            return;
+
         // Reset the player reference
-        if (other.CompareTag("Player"))
-            _player = null;
+        _player = null;
+
+        // Hide the information
+        _elevatorCallingInfo.enabled = false;
     }
 
     #endregion
@@ -77,6 +98,9 @@ public class ElevatorShaft : MonoBehaviour
                 yield return StartCoroutine(_elevator.Move(false, false));
             }
         }
+
+        // Hide the information
+        _elevatorCallingInfo.enabled = false;
     }
 
     /// <summary>

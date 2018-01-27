@@ -139,11 +139,14 @@ public class Elevator : MonoBehaviour
         // Increment the elevator floor
         Floor = (up) ? Floor + 1 : Floor - 1;
 
+        // Play the arrival sound
+        AudioPlayer.EffectsSource.PlayOneShot(_arrivalSound);
+
+        // Update the doors
+        _elevatorShaft.UpdateDoorColliders();
+
         if (movePlayer)
         {
-            // Play the arrival sound
-            AudioPlayer.EffectsSource.PlayOneShot(_arrivalSound);
-
             // Stop playing the elevator music
             AudioPlayer.MusicSource.Stop();
 
@@ -154,9 +157,6 @@ public class Elevator : MonoBehaviour
             // Increment the player floor
             _player.Floor = (up) ? _player.Floor + 1 : _player.Floor - 1;
         }
-
-        // Update the doors
-        _elevatorShaft.UpdateDoorColliders();
     }
 
     #endregion
