@@ -12,6 +12,14 @@ public class Player : MonoBehaviour
 	[Tooltip("The material for the image to download.")]
 	[SerializeField]
 	private Material _downloadMaterial = null;
+
+	/// <summary>
+	/// The icon that displays the signal strength.
+	/// </summary>
+	[Tooltip("The icon that displays the signal strength.")]
+	[SerializeField]
+	private SignalStrengthIcon _signalStrengthIcon = null;
+
 	#endregion
 
 	#region Static Properties
@@ -39,6 +47,7 @@ public class Player : MonoBehaviour
 	/// </summary>
 	[HideInInspector]
 	public bool Hidden = false;
+
 	#endregion
 
 	#region Fields
@@ -99,20 +108,33 @@ public class Player : MonoBehaviour
 		// Handle the inputs.
 		Inputs();
 
-		if (_connectedHotspot != null)
+		if (_connectedHotspot == null)
 		{
-			// Disconnect if the hotspot is drained.
-			if (_connectedHotspot.Drained || _connectedHotspot.ReturnSignalStrength(this) == 0)
-				_connectedHotspot = null;
-			else
-			{
-				// Get data from the connected hot spot.
-				_downloadedData += _connectedHotspot.ReturnData(this);
-
-				// Visually update the progress
-				UpdateProgress();
-			}
+			// Show the no connection sprite
+			UpdateSignalStrengthIcon(0f);
+			return;
 		}
+
+		// Disconnect if the hotspot is drained.
+		float signalStrength = _connectedHotspot.ReturnSignalStrength(this);
+		if (_connectedHotspot.Drained || signalStrength < 0.001f)
+		{
+			// Disconnect the hotspot
+			_connectedHotspot = null;
+
+			// Show the no connection sprite
+			UpdateSignalStrengthIcon(0f);
+			return;
+		}
+
+		// Get data from the connected hot spot.
+		_downloadedData += _connectedHotspot.ReturnData(this);
+
+		// Visually update the progress
+		UpdateProgress();
+
+		// Update the sprite
+		UpdateSignalStrengthIcon(signalStrength);
 	}
 
 	private void OnDisable()
@@ -136,10 +158,7 @@ public class Player : MonoBehaviour
 			return;
 
 		// Movement controls.
-		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
-		{
-			_agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
-		}
+		_agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
 
 		// Wifi controls.
 		if (Input.GetButtonUp("Connect"))
@@ -191,6 +210,11 @@ public class Player : MonoBehaviour
 
 		// Make the player invisible.
 		_playerRenderer.enabled = !hide;
+	}
+
+	public void UpdateSignalStrengthIcon(float signalStrength)
+	{
+		_signalStrengthIcon.UpdateSprite(signalStrength);
 	}
 	#endregion
 

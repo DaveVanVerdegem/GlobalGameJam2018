@@ -42,24 +42,24 @@ public class Hotspot : MonoBehaviour
 	[SerializeField]
 	private float _availableData = 1f;
 
-    /// <summary>
-    /// The time in seconds that it takes to complete one pulse.
-    /// </summary>
-    [SerializeField]
-    private float _signalPulseSpeed = 3.0f;
+	/// <summary>
+	/// The time in seconds that it takes to complete one pulse.
+	/// </summary>
+	[SerializeField]
+	private float _signalPulseSpeed = 3.0f;
 
-    [Header("Colors")]
-    /// <summary>
-    /// The color when the bandwidth is at the lowest.
-    /// </summary>
-    [SerializeField]
-    private Color _minimumBandwidthColor = Color.red;
+	[Header("Colors")]
+	/// <summary>
+	/// The color when the bandwidth is at the lowest.
+	/// </summary>
+	[SerializeField]
+	private Color _minimumBandwidthColor = Color.red;
 
-    /// <summary>
-    /// The color when the bandwidth is at the highest.
-    /// </summary>
-    [SerializeField]
-    private Color _maximumBandwidthColor = Color.green;
+	/// <summary>
+	/// The color when the bandwidth is at the highest.
+	/// </summary>
+	[SerializeField]
+	private Color _maximumBandwidthColor = Color.green;
 	#endregion
 
 	#region Static Properties
@@ -77,50 +77,49 @@ public class Hotspot : MonoBehaviour
 	public bool Drained = false;
 	#endregion
 
-
-    /// <summary>
-    /// The ratio for scale of the sprite renderer object when the sprite has reached the boundaries.
-    /// </summary>
-    [SerializeField]
-    private float _maxScaleRatio = 17.3f / 5f;
+	/// <summary>
+	/// The ratio for scale of the sprite renderer object when the sprite has reached the boundaries.
+	/// </summary>
+	[SerializeField]
+	private float _maxScaleRatio = 17.3f / 5f;
 	#region Fields
 	/// <summary>
 	/// Floor that this hotspot is on.
 	/// </summary>
 	private int _floorLevel;
-    /// <summary>
-    /// The sprite renderers of this object.
-    /// </summary>
-    private List<SpriteRenderer> _spriteRenderers = null;
+	/// <summary>
+	/// The sprite renderers of this object.
+	/// </summary>
+	private List<SpriteRenderer> _spriteRenderers = null;
 
 	#endregion
 
 	#region Life Cycle
 
-    private void Awake()
-    {
-        _spriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
-    }
-	// Use this for initialization
-	private void Start()
+	private void Awake()
 	{
 		// Add the hot spot to the scene list.
 		if (!Hotspots.Contains(this))
 			Hotspots.Add(this);
 
+		_spriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
+	}
+	// Use this for initialization
+	private void Start()
+	{
 		// Set the floor for this hotspot.
 		_floorLevel = Level.Instance.ReturnFloorLevel(transform.position);
 
-        // Visualise the pulses
-        for (int i = 0; i < _spriteRenderers.Count; ++i)
-            StartCoroutine(PulseSignal(_spriteRenderers[i], 0.3f * i));
+		// Visualize the pulses
+		for (int i = 0; i < _spriteRenderers.Count; ++i)
+			StartCoroutine(PulseSignal(_spriteRenderers[i], 0.3f * i));
 
-        // Determine the color according to the bandwidth and update the spriterenderers
-        if (_bandwidth < 0 || _bandwidth > 1f)
-            Debug.LogWarning(string.Format("Bandwidth should be normalised! ({0})", _bandwidth));
+		// Determine the color according to the bandwidth and update the spriterenderers
+		if (_bandwidth < 0 || _bandwidth > 1f)
+			Debug.LogWarning(string.Format("Bandwidth should be normalised! ({0})", _bandwidth));
 
-        Color bandwithColor = Color.Lerp(_minimumBandwidthColor, _maximumBandwidthColor, _bandwidth);
-        _spriteRenderers.ForEach(x => x.color = bandwithColor);
+		Color bandwithColor = Color.Lerp(_minimumBandwidthColor, _maximumBandwidthColor, _bandwidth);
+		_spriteRenderers.ForEach(x => x.color = bandwithColor);
 	}
 
 	// Update is called once per frame
@@ -149,10 +148,12 @@ public class Hotspot : MonoBehaviour
 	/// <returns>Returns the data as a float.</returns>
 	public float ReturnData(Player player)
 	{
+		// Retrieve the signal strength
 		float signalStrength = ReturnSignalStrength(player);
 
 		// Calculate the transmitted data.
-		float transmittedData = signalStrength * _bandwidth;
+		float bandwidthScale = 0.1f;
+		float transmittedData = signalStrength * (_bandwidth * bandwidthScale);
 
 		// Make sure that the transmitted data doesn't exceed the available data.
 		if (transmittedData > _availableData)
@@ -175,13 +176,13 @@ public class Hotspot : MonoBehaviour
 	public float ReturnSignalStrength(Player player)
 	{
 		// Get signal strength.
-        float distance = Vector2.Distance(transform.position, player.transform.position);
+		float distance = Vector2.Distance(transform.position, player.transform.position);
 
-        // Return no signal if the hotspot is out of range.
-        if (distance > Range)
-            return 0;
+		// Return no signal if the hotspot is out of range.
+		if (distance > Range)
+			return 0;
 
-        float signalStrength = _signalStrength.Evaluate((Range - distance) / Range);
+		float signalStrength = _signalStrength.Evaluate((Range - distance) / Range);
 
 		int floorDifference = Mathf.Abs(Level.Instance.ReturnFloorLevel(player.transform.position) - _floorLevel);
 
@@ -209,38 +210,38 @@ public class Hotspot : MonoBehaviour
 		hotspotsInRange.RemoveAll(hotspot => Vector2.Distance(player.transform.position, hotspot.transform.position) > hotspot.Range);
 
 		return hotspotsInRange;
-    }
-    #endregion
+	}
+	#endregion
 
-    #region Coroutines
+	#region Coroutines
 
-    private IEnumerator PulseSignal(SpriteRenderer targetRenderer, float progressOffset)
-    {
-        float progress = progressOffset;
-        float rate = 1f / _signalPulseSpeed;
-        float targetScale = Range * _maxScaleRatio;
+	private IEnumerator PulseSignal(SpriteRenderer targetRenderer, float progressOffset)
+	{
+		float progress = progressOffset;
+		float rate = 1f / _signalPulseSpeed;
+		float targetScale = Range * _maxScaleRatio;
 
-        // Infinite loop to keep pulsing
-        for (;;)
-        {
-            while (progress < 1.0f)
-            {
-                progress += Time.deltaTime * rate;
+		// Infinite loop to keep pulsing
+		for (; ; )
+		{
+			while (progress < 1.0f)
+			{
+				progress += Time.deltaTime * rate;
 
-                // Update the scale of the spriterenderer
-                float scale = Mathf.Lerp(0, targetScale, progress);
-                targetRenderer.transform.localScale = new Vector3(scale, scale, scale);
+				// Update the scale of the spriterenderer
+				float scale = Mathf.Lerp(0, targetScale, progress);
+				targetRenderer.transform.localScale = new Vector3(scale, scale, scale);
 
-                // Fade the opacity
-                float opacity = Mathf.Lerp(1f, 0f, progress);
-                targetRenderer.color = new Color(targetRenderer.color.r, targetRenderer.color.g, targetRenderer.color.b, opacity);
+				// Fade the opacity
+				float opacity = Mathf.Lerp(1f, 0f, progress);
+				targetRenderer.color = new Color(targetRenderer.color.r, targetRenderer.color.g, targetRenderer.color.b, opacity);
 
-                yield return new WaitForEndOfFrame();
-            }
+				yield return new WaitForEndOfFrame();
+			}
 
-            // Once finished, reset the progress
-            progress = 0f;
-        }
+			// Once finished, reset the progress
+			progress = 0f;
+		}
 	}
 	#endregion
 }
