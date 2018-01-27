@@ -294,5 +294,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfddec59f7908d04194212721743785c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _backgroundMusic: {fileID: 0}
-  _chaseMusic: {fileID: 0}
+  _backgroundMusic: {fileID: 8300000, guid: 08a3b55e156fd004ea9bd5c2d41e0d43, type: 3}
+  _chaseMusic: {fileID: 8300000, guid: e8d55c24204114b46a0909b36abc6fa1, type: 3}
