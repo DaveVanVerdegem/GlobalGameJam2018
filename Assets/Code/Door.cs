@@ -16,11 +16,6 @@ public class Door : MonoBehaviour
     #region Fields
 
     /// <summary>
-    /// The collider for the interaction. If the player is in this collider, he can open or close the door
-    /// </summary>
-    private Collider2D _interactionCollider = null;
-
-    /// <summary>
     /// Is this door open?
     /// </summary>
     private bool _isOpen = false;
@@ -42,7 +37,6 @@ public class Door : MonoBehaviour
     private void Awake()
     {
         // Retrieve the components
-        _interactionCollider = GetComponent<Collider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
