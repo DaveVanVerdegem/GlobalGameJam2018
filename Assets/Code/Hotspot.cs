@@ -156,14 +156,14 @@ public class Hotspot : MonoBehaviour
 		float transmittedData = signalStrength * (_bandwidth * bandwidthScale);
 
 		// Make sure that the transmitted data doesn't exceed the available data.
-		if (transmittedData > _availableData)
+		if (transmittedData >= _availableData)
 			transmittedData = _availableData;
 
 		// Remove the data from the available data.
 		_availableData -= transmittedData;
 
 		// Update the state of this hotspot.
-		Drained = (_availableData <= 0);
+		Drained = (_availableData < 0);
 
 		return transmittedData;
 	}
