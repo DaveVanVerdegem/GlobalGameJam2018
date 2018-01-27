@@ -50,6 +50,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Shadows
+    uniqueID: 4285843161
+    locked: 0
   - name: Rooms
     uniqueID: 449128491
     locked: 0

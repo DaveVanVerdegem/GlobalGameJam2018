@@ -3,6 +3,9 @@
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
+		[Toggle]
+		_UseBlurTex("Use blur texture", Float) = 0
+		_MainBlurTex("Blur Texture", 2D) = "white" {}
 		_TransitionTex("Transition Texture", 2D) = "white" {}
 		_Color("Undownloaded Color", Color) = (1,1,1,1)
 		_Progress("Percentage Downloaded", Range(0, 1)) = 0
@@ -36,10 +39,12 @@
 		};
 
 		sampler2D _MainTex;
+		sampler2D _MainBlurTex;
 		sampler2D _TransitionTex;
 		float4 _MainTex_ST;
 		fixed4 _Color;
 		float _Progress;
+		float _UseBlurTex;
 
 		v2f vert(appdata v)
 		{
@@ -57,7 +62,16 @@
 
 		// Don't display the part if it has not been downloaded already
 		if (trans.b >= _Progress)
-			return _Color;
+		{
+			if (_UseBlurTex)
+			{
+				return tex2D(_MainBlurTex, i.uv);
+			}
+			else
+			{
+				return _Color;
+			}
+		}
 
 		// Return the sampled texture
 		return tex2D(_MainTex, i.uv);
