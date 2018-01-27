@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Spine.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,9 +25,9 @@ public class Agent : MonoBehaviour
 
 	#region Fields
 	/// <summary>
-	/// The sprite renderer of the player
+	/// The skeleton animation of the agent.
 	/// </summary>
-	private SpriteRenderer _spriteRenderer = null;
+	private SkeletonAnimation _skeletonAnimation;
 	#endregion
 
 	#region Life Cycle
@@ -34,7 +35,7 @@ public class Agent : MonoBehaviour
 	private void Awake()
 	{
 		// Get the needed components.
-		_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+		_skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 	}
 
 	// Update is called once per frame
@@ -53,8 +54,11 @@ public class Agent : MonoBehaviour
 		transform.Translate(Vector2.right * direction * _speed);
 
 		// Have the agent face the direction it's moving in.
-		FacingRight = (direction > 0);
-		_spriteRenderer.flipX = !FacingRight;
+		FacingRight = (direction >= 0);
+		_skeletonAnimation.transform.localScale = (FacingRight) ? Vector3.one : new Vector3(-1f, 1, 1);
+
+		// Set the right animation.
+		_skeletonAnimation.AnimationName = (Mathf.Abs(direction) > 0) ? "walk" : "idle";
 	}
 	#endregion
 }
