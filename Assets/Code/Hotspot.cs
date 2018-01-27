@@ -16,7 +16,7 @@ public class Hotspot : MonoBehaviour
 	/// </summary>
 	[Tooltip("Strength of the signal depending on the distance from the hotspot.")]
 	[SerializeField]
-	private AnimationCurve _signalStrength;
+	private AnimationCurve _signalStrength = null;
 
 	/// <summary>
 	/// Penalty per floor different from the hotspots floor.

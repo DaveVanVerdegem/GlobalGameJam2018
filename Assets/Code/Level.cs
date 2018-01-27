@@ -11,23 +11,25 @@ public class Level : MonoBehaviour
 	/// </summary>
 	[Tooltip("Height of one floor level.")]
 	public float FloorHeight = 2f;
-	#endregion
+    #endregion
 
-	#region Static Properties
-	/// <summary>
-	/// Reference to the ingame level object.
-	/// </summary>
-	public static Level Instance;
-	#endregion
+    #region Static Properties
 
-	#region Life Cycle
-	// Use this for initialization
-	private void Awake()
+    private static Level _instance;
+    /// <summary>
+    /// Reference to the ingame level object.
+    /// </summary>
+    public static Level Instance
+    {
+        get { return _instance ?? (_instance = FindObjectOfType<Level>()); }
+        set { _instance = value; }
+    }
+    #endregion
+
+    #region Life Cycle
+    // Use this for initialization
+    private void Awake()
 	{
-		if (Instance == null)
-			Instance = this;
-		else
-			Destroy(gameObject);
 	}
 
 	// Update is called once per frame

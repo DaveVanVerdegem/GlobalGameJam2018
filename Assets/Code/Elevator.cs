@@ -10,13 +10,13 @@ public class Elevator : MonoBehaviour
     /// The distance between two floors
     /// </summary>
     [SerializeField]
-    private float _distance = 5.0f;
+    private float _distance = 1f;
 
     /// <summary>
     /// The time the lift should take to travel 1 floor
     /// </summary>
     [SerializeField]
-    private float _travelTime = 5.0f;
+    private float _travelTime = 2.6f;
 
     [Header("Audio")]
     [SerializeField]
@@ -34,21 +34,21 @@ public class Elevator : MonoBehaviour
     /// </summary>
     private bool _isMoving = false;
 
-    private AudioSource _audioSource;
+    /// <summary>
+    /// Is the player currently standing on this lift?
+    /// </summary>
+    private bool _playerPresent = false;
+
 
     #endregion
 
     #region Life Cycle
 
-    private void Awake()
-    {
-        _audioSource = GetComponent<AudioSource>();
-    }
 
     private void Update()
     {
-        // If the lift is moving, ignore all input
-        if (_isMoving)
+        // If the player is not in the elevator or the elevator is already moving, ignore all input
+        if (!_playerPresent || _isMoving)
             return;
 
         // Check if the player wants the lift to go up or down
@@ -60,6 +60,20 @@ public class Elevator : MonoBehaviour
         {
             StartCoroutine(Move(false));
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+            _playerPresent = true;
+
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+            _playerPresent = false;
+
     }
 
     #endregion
