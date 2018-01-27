@@ -203,7 +203,7 @@ public class Player : MonoBehaviour
     /// Visually update the progress of downloading the graphic.
     /// </summary>
     /// <param name="reset"></param>
-    private void UpdateProgress(bool reset = false)
+    public void UpdateProgress(bool reset = false)
     {
         float progress = (reset) ? 0f : _downloadedData / _dataToDownload;
         _downloadMaterial.SetFloat("_Progress", progress);
