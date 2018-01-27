@@ -71,11 +71,11 @@ public class Player : MonoBehaviour
 	#region Methods
 	private void Inputs()
 	{
-		// Movement controls.
 		// Disable inputs when the player is frozen
 		if (_freeze)
 			return;
 
+		// Movement controls.
 		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
 		{
 			_agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
@@ -84,10 +84,21 @@ public class Player : MonoBehaviour
 		// Wifi controls.
 		if (Input.GetButtonUp("Connect"))
 		{
-			_connectedHotspot = ReturnBestAvailableHotspot();
+			// Connect to new hotspot.
+			if (_connectedHotspot == null)
+			{
+				_connectedHotspot = ReturnBestAvailableHotspot();
 
-			if (_connectedHotspot != null)
-				Debug.Log(string.Format("Connected to hot spot."));
+				if (_connectedHotspot != null)
+					Debug.Log(string.Format("Connected to hot spot."));
+			}
+			// Disconnect from hotspot.
+			else
+			{
+				_connectedHotspot = null;
+
+				Debug.Log(string.Format("Disconnected from hotspot."));
+			}
 		}
 	}
 	/// <summary>
