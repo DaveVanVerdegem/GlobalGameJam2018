@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33898717640288118}
   - component: {fileID: 61262983342017608}
   - component: {fileID: 114539720554524622}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Elevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4192636051373070}
   - component: {fileID: 61457971098444482}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FloorCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4899506354800724}
   - component: {fileID: 212293207301627876}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
