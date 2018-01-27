@@ -128,8 +128,13 @@ public class Hotspot : MonoBehaviour
     public float ReturnSignalStrength(Player player)
     {
         // Get signal strength.
-        float relativeDistance = Vector2.Distance(transform.position, player.transform.position);
-        float signalStrength = _signalStrength.Evaluate((Range - relativeDistance) / Range);
+		float distance = Vector2.Distance(transform.position, player.transform.position);
+
+		// Return no signal if the hotspot is out of range.
+		if (distance > Range)
+			return 0;
+
+		float signalStrength = _signalStrength.Evaluate((Range - distance) / Range);
 
         int floorDifference = Mathf.Abs(Level.Instance.ReturnFloorLevel(player.transform.position) - _floorLevel);
 
