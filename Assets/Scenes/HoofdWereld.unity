@@ -528,7 +528,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4343676164069186, guid: da7e99e7f2d4b2d4fa81ba6ddcad432d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.9
+      value: 4.94
       objectReference: {fileID: 0}
     - target: {fileID: 4343676164069186, guid: da7e99e7f2d4b2d4fa81ba6ddcad432d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -898,7 +898,7 @@ Prefab:
         type: 2}
       propertyPath: _elevatorCallingInfo
       value: 
-      objectReference: {fileID: 1108461882}
+      objectReference: {fileID: 0}
     - target: {fileID: 1936558114562474, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
       propertyPath: m_Name
       value: ElevatorShaft (2)
@@ -957,6 +957,10 @@ Prefab:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1936558114562474, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059349629453408, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -2310,6 +2314,11 @@ Prefab:
       propertyPath: Floor
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114400253249773706, guid: d93b03bad95d93943bcac46bf90cde0f,
+        type: 2}
+      propertyPath: _interactableIcon
+      value: 
+      objectReference: {fileID: 749290628}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d93b03bad95d93943bcac46bf90cde0f, type: 2}
   m_IsPrefabParent: 0
@@ -2661,6 +2670,79 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54d46a94ce4d8b84eb53332a67487fa2, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &749290626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 749290627}
+  - component: {fileID: 749290628}
+  m_Layer: 8
+  m_Name: Interactable_Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &749290627
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 749290626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.736, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1286614526}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &749290628
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 749290626}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.16, y: 0.16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!1 &749371602
 GameObject:
   m_ObjectHideFlags: 0
@@ -3127,7 +3209,7 @@ Prefab:
         type: 2}
       propertyPath: _elevatorCallingInfo
       value: 
-      objectReference: {fileID: 1108461882}
+      objectReference: {fileID: 0}
     - target: {fileID: 1936558114562474, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
       propertyPath: m_Name
       value: ElevatorShaft (4)
@@ -3378,80 +3460,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1 &1108461880
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1108461881}
-  - component: {fileID: 1108461883}
-  - component: {fileID: 1108461882}
-  m_Layer: 5
-  m_Name: Elevator_Calling_Info
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1108461881
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1108461880}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1725542981}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 100}
-  m_Pivot: {x: 0.5, y: 1}
---- !u!114 &1108461882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1108461880}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 28
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Press 'space' to call the elevator.
---- !u!222 &1108461883
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1108461880}
 --- !u!4 &1135638250 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4047318412734936, guid: 54d46a94ce4d8b84eb53332a67487fa2,
@@ -3680,7 +3688,7 @@ Prefab:
         type: 2}
       propertyPath: _elevatorCallingInfo
       value: 
-      objectReference: {fileID: 1108461882}
+      objectReference: {fileID: 0}
     - target: {fileID: 1936558114562474, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
       propertyPath: m_Name
       value: ElevatorShaft (1)
@@ -3713,6 +3721,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4047318412734936, guid: 54d46a94ce4d8b84eb53332a67487fa2,
     type: 2}
   m_PrefabInternal: {fileID: 787398505}
+--- !u!4 &1286614526 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4127570192676600, guid: d93b03bad95d93943bcac46bf90cde0f,
+    type: 2}
+  m_PrefabInternal: {fileID: 599993693}
 --- !u!1001 &1303330506
 Prefab:
   m_ObjectHideFlags: 0
@@ -3852,11 +3865,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114214079057967794, guid: 0a44a25314b68e04caf213441c51de62,
-        type: 2}
-      propertyPath: _elevatorCallingInfo
-      value: 
-      objectReference: {fileID: 1108461882}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
   m_IsPrefabParent: 0
@@ -4220,7 +4228,7 @@ Prefab:
         type: 2}
       propertyPath: _elevatorCallingInfo
       value: 
-      objectReference: {fileID: 1108461882}
+      objectReference: {fileID: 0}
     - target: {fileID: 1936558114562474, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
       propertyPath: m_Name
       value: ElevatorShaft (3)
@@ -4292,6 +4300,10 @@ Prefab:
         type: 2}
       propertyPath: BottomFloor
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059349629453408, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 61645287668698276, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
@@ -4463,7 +4475,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1108461881}
   - {fileID: 2090829491}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -4675,7 +4686,7 @@ RectTransform:
   m_Children:
   - {fileID: 499616990}
   m_Father: {fileID: 1725542981}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
