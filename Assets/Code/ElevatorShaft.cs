@@ -88,14 +88,17 @@ public class ElevatorShaft : MonoBehaviour
         int floorDifference = _elevator.Floor - _player.Floor;
         for (int i = 0; i < Mathf.Abs(floorDifference); ++i)
         {
+            // Only play the arrival sound for the last floor the elevator should land on
+            bool playArrivalSound = (i == Mathf.Abs(floorDifference) - 1);
+
             // If the floor difference is negative, the elevator should travel upwards
             if (floorDifference < 1)
             {
-                yield return StartCoroutine(_elevator.Move(true, false));
+                yield return StartCoroutine(_elevator.Move(true, false, playArrivalSound));
             }
             else // If the floor difference is positive, the elevator should travel downwards
             {
-                yield return StartCoroutine(_elevator.Move(false, false));
+                yield return StartCoroutine(_elevator.Move(false, false, playArrivalSound));
             }
         }
 

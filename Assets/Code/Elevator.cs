@@ -104,7 +104,7 @@ public class Elevator : MonoBehaviour
     /// Move the lift one floor.
     /// </summary>
     /// <param name="up">Move the lift up if true, down if false.</param>
-    public IEnumerator Move(bool up, bool movePlayer)
+    public IEnumerator Move(bool up, bool movePlayer, bool arrivalSound = false)
     {
         // Avoid exceeding limits
         if (up && Floor == TopFloor)
@@ -155,8 +155,9 @@ public class Elevator : MonoBehaviour
         // Increment the elevator floor
         Floor = (up) ? Floor + 1 : Floor - 1;
 
-        // Play the arrival sound
-        AudioPlayer.EffectsSource.PlayOneShot(_arrivalSound);
+        // Play the arrival sound if moving the player or bool has been specified
+        if (movePlayer || arrivalSound)
+            AudioPlayer.EffectsSource.PlayOneShot(_arrivalSound);
 
         // Update the doors
         _elevatorShaft.UpdateDoorColliders();
