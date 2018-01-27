@@ -74,6 +74,11 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+	private void OnDisable()
+	{
+		Instance = null;
+	}
     #endregion
 
     #region Methods
@@ -111,9 +116,9 @@ public class Player : MonoBehaviour
         }
     }
     /// <summary>
-    /// Disable the players movements or not
+	/// Disable the players input or not.
     /// </summary>
-    /// <param name="freeze"></param>
+	/// <param name="freeze">Freeze the inputs of the player.</param>
     public void Freeze(bool freeze = true)
     {
         _freeze = freeze;
