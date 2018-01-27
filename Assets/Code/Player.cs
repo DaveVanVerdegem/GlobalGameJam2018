@@ -127,6 +127,10 @@ public class Player : MonoBehaviour
 		// Check if the game can be won.
 		if (Mathf.Abs(_downloadedData - _dataToDownload) <= _roundingMargin)
 		{
+			// Set the loaded image to full.
+			_downloadedData = _dataToDownload;
+			UpdateProgress();
+
 			// Win game.
 			GameManager.Instance.TriggerWin();
 		}
@@ -215,7 +219,7 @@ public class Player : MonoBehaviour
 	/// <param name="reset">Reset the update progress.</param>
 	private void UpdateProgress(bool reset = false)
 	{
-		float progress = (reset) ? 0f : _downloadedData / _dataToDownload;
+		float progress = (reset) ? 0f : (_downloadedData / _dataToDownload);
 		_downloadMaterial.SetFloat("_Progress", progress);
 	}
 

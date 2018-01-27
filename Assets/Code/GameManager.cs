@@ -55,6 +55,12 @@ public class GameManager : MonoBehaviour
 		Time.timeScale = 1;
 	}
 
+	private void Start()
+	{
+		// Play the background music.
+		AudioPlayer.Instance.PlayMusic();
+	}
+
 	// Update is called once per frame
 	private void Update()
 	{
