@@ -45,20 +45,20 @@ public class Elevator : MonoBehaviour
     /// </summary>
     [Tooltip("Set this as the floor the elevator is starting on.")]
     public int Floor = 0;
+
     #endregion
 
     #region Fields
-
-    /// <summary>
-    /// Is the lift moving?
-    /// </summary>
-    private bool _isMoving = false;
 
     /// <summary>
     /// Contains a reference to the player ONLY IF the player is present.
     /// </summary>
     private Player _player = null;
 
+    /// <summary>
+    /// Is the lift moving?
+    /// </summary>
+    private bool _isMoving = false;
     #endregion
 
     #region Life Cycle
@@ -148,8 +148,7 @@ public class Elevator : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        // Moving is done
-        // mark the lift as stationary
+        // mark the lift as stationary if it was not being called
         _isMoving = false;
 
         // Increment the elevator floor
