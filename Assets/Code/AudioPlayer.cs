@@ -33,10 +33,8 @@ public class AudioPlayer : MonoBehaviour
     private void Awake()
     {
         MusicSource = GetComponents<AudioSource>()[0];
-        EffectsSource= GetComponents<AudioSource>()[1];
+        EffectsSource = GetComponents<AudioSource>()[1];
     }
 
     #endregion
-
-
 }
