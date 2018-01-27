@@ -105,7 +105,7 @@ public class ElevatorShaft : MonoBehaviour
         }
 
         // Hide the information
-        _player.ShowInteractableIcon(false);
+        Player.Instance.ShowInteractableIcon(false);
 
         // Reset the boolean so the elevator can be called again if it is not on a floor
         _isCalled = false;
