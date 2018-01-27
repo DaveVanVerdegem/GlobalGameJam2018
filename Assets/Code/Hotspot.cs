@@ -77,6 +77,12 @@ public class Hotspot : MonoBehaviour
 	{
 	}
 
+	private void OnDisable()
+	{
+		// Clear the static list.
+		Hotspots.Clear();
+	}
+
 	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.green;

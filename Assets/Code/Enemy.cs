@@ -18,6 +18,13 @@ public class Enemy : MonoBehaviour
 	[Tooltip("Layer mask that enemy can detect player on.")]
 	[SerializeField]
 	private LayerMask _detectionMask;
+
+	/// <summary>
+	/// Range at which enemy catches the player.
+	/// </summary>
+	[Tooltip("Range at which enemy catches the player.")]
+	[SerializeField]
+	private float _catchRange = 1f;
 	#endregion
 
 	#region Fields
@@ -34,16 +41,20 @@ public class Enemy : MonoBehaviour
 
 	#region Life Cycle
 	// Use this for initialization
-	void Start()
+	private void Start()
 	{
 		// Get the needed components.
 		_agent = GetComponent<Agent>();
 	}
 
 	// Update is called once per frame
-	void Update()
+	private void Update()
 	{
+		if (GameManager.Instance.GameOver)
+			return;
+
 		DetectPlayer();
+		FollowPlayer();
 	}
 	#endregion
 
@@ -64,13 +75,30 @@ public class Enemy : MonoBehaviour
 		Vector2 lookDirection = Player.Instance.transform.position - transform.position;
 		RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lookDirection, _detectionRange, _detectionMask);
 
-		Debug.Log(string.Format("Seeing {0}.", raycastHit.transform), raycastHit.transform);
-
 		// Update player detection.
 		_playerDetected = (raycastHit.transform == Player.Instance.transform);
+	}
 
-		if (_playerDetected)
-			Debug.Log("seeing you!");
+	/// <summary>
+	/// Follow the player if he's been detected.
+	/// </summary>
+	private void FollowPlayer()
+	{
+		// Only continue if the player has been detected.
+		if (!_playerDetected)
+			return;
+
+		if (Player.Instance.transform.position.x > transform.position.x)
+
+			_agent.Move(1 * Time.deltaTime);
+		else
+			_agent.Move(-1 * Time.deltaTime);
+
+		// Check if the enemy can catch the player.
+		if (Vector2.Distance(transform.position, Player.Instance.transform.position) < _catchRange)
+		{
+			GameManager.Instance.TriggerGameOver();
+		}
 	}
 	#endregion
 }
