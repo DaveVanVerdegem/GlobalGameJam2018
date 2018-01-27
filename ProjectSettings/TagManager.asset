@@ -50,3 +50,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Rooms
+    uniqueID: 449128491
+    locked: 0
+  - name: Doors
+    uniqueID: 2696958377
+    locked: 0
