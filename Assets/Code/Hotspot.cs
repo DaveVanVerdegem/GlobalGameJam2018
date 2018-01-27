@@ -19,6 +19,13 @@ public class Hotspot : MonoBehaviour
 	private AnimationCurve _signalStrength = null;
 
 	/// <summary>
+	/// Bandwidth for this hotspot. Defines how fast this hotspot sends data.
+	/// </summary>
+	[Tooltip("Bandwidth for this hotspot. Defines how fast this hotspot sends data.")]
+	[SerializeField]
+	private float _bandwidth = .1f;
+
+	/// <summary>
 	/// Penalty per floor different from the hotspots floor.
 	/// </summary>
 	[Tooltip("Penalty per floor different from the hotspots floor.")]
@@ -26,11 +33,19 @@ public class Hotspot : MonoBehaviour
 	private float _floorPenalty = .4f;
 	#endregion
 
-	#region Properties
+	#region Static Properties
 	/// <summary>
 	/// List of all the hotspots in the scene.
 	/// </summary>
 	public static List<Hotspot> Hotspots = new List<Hotspot>();
+	#endregion
+
+	#region Properties
+	/// <summary>
+	/// True when all the available data on this hotspot has been used.
+	/// </summary>
+	[HideInInspector]
+	public bool Drained = false;
 	#endregion
 
 	#region Fields
@@ -38,6 +53,11 @@ public class Hotspot : MonoBehaviour
 	/// Floor that this hotspot is on.
 	/// </summary>
 	private int _floorLevel;
+
+	/// <summary>
+	/// Data still remaining on this hotspot.
+	/// </summary>
+	private float _availableData = 1f;
 	#endregion
 
 	#region Life Cycle
@@ -71,6 +91,31 @@ public class Hotspot : MonoBehaviour
 	/// <param name="player">Player to send data to.</param>
 	/// <returns>Returns the data as a float.</returns>
 	public float ReturnData(Player player)
+	{
+		float signalStrength = ReturnSignalStrength(player);
+
+		// Calculate the transmitted data.
+		float transmittedData = signalStrength * _bandwidth;
+
+		// Make sure that the transmitted data doesn't exceed the available data.
+		if (transmittedData > _availableData)
+			transmittedData = _availableData;
+
+		// Remove the data from the available data.
+		_availableData -= transmittedData;
+
+		// Update the state of this hotspot.
+		Drained = (_availableData <= 0);
+
+		return transmittedData;
+	}
+
+	/// <summary>
+	/// Returns the signal strength of this hotspot to the given player.
+	/// </summary>
+	/// <param name="player">Player to get signal strength for.</param>
+	/// <returns>Returns the signal strength as a float.</returns>
+	public float ReturnSignalStrength(Player player)
 	{
 		// Get signal strength.
 		float relativeDistance = Vector2.Distance(transform.position, player.transform.position);

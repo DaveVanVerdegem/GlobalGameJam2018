@@ -5,81 +5,131 @@ using UnityEngine;
 [RequireComponent(typeof(Agent))]
 public class Player : MonoBehaviour
 {
-    #region Fields
+	#region Fields
+	/// <summary>
+	/// Attached agent component.
+	/// </summary>
+	private Agent _agent;
 
-    /// <summary>
-    /// Attached agent component.
-    /// </summary>
-    private Agent _agent;
+	/// <summary>
+	/// Lists of the hotspots in range of this player.
+	/// </summary>
+	private List<Hotspot> _hotspotsInRange = new List<Hotspot>();
 
-    /// <summary>
-    /// Lists of the hotspots in range of this player.
-    /// </summary>
-    private List<Hotspot> _hotspotsInRange = new List<Hotspot>();
+	/// <summary>
+	/// Hotspot that the player is currently connected to.
+	/// </summary>
+	private Hotspot _connectedHotspot;
+	/// <summary>
+	/// Is the player frozen aka prohibited to move?
+	/// </summary>
+	private bool _freeze = false;
 
-    /// <summary>
-    /// Is the player frozen aka prohibited to move?
-    /// </summary>
-    private bool _freeze = false;
+	/// <summary>
+	/// The sprite renderer of the player
+	/// </summary>
+	private SpriteRenderer _spriteRenderer = null;
+	#endregion
 
-    /// <summary>
-    /// The sprite renderer of the player
-    /// </summary>
-    private SpriteRenderer _spriteRenderer = null;
+	#region Life Cycle
+	// Use this for initialization
+	private void Awake()
+	{
+		// Get the needed components.
+		_agent = GetComponent<Agent>();
+		_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+	}
 
-    #endregion
+	// Update is called once per frame
+	private void Update()
+	{
+		// Get all the hotspots in range of this player.
+		_hotspotsInRange = Hotspot.ReturnHotspotsInRange(this);
 
-    #region Life Cycle
+		// Handle the inputs.
+		Inputs();
 
-    // Use this for initialization
-    private void Awake()
-    {
-        // Get the needed components.
-        _agent = GetComponent<Agent>();
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
+		if (_connectedHotspot != null)
+		{
+			// Disconnect if the hotspot is drained.
+			if (_connectedHotspot.Drained)
+				_connectedHotspot = null;
+			else
+			{
+				// Get data from the connected hot spot.
+				Debug.Log(string.Format("Getting {0} of data.", _connectedHotspot.ReturnData(this)));
+			}
+		}
+	}
+	#endregion
 
-    // Update is called once per frame
-    private void Update()
-    {
-        // Handle the inputs.
-        Inputs();
+	#region Methods
+	private void Inputs()
+	{
+		// Movement controls.
+		// Disable inputs when the player is frozen
+		if (_freeze)
+			return;
 
-        // Get all the hotspots in range of this player.
-        _hotspotsInRange = Hotspot.ReturnHotspotsInRange(this);
+		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
+		{
+			_agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
 
-        if (_hotspotsInRange.Count > 0)
-            // Get data from first hot spot.
-            Debug.Log(string.Format("Got {0} of data from hotspot.", _hotspotsInRange[0].ReturnData(this)));
-    }
+			// Look in the direction you are walking
+			_spriteRenderer.flipX = (Input.GetAxis("Horizontal") <= 0);
+		}
 
-    #endregion
+		// Wifi controls.
+		if (Input.GetButtonUp("Connect"))
+		{
+			_connectedHotspot = ReturnBestAvailableHotspot();
 
-    #region Methods
+			if (_connectedHotspot != null)
+				Debug.Log(string.Format("Connected to hot spot."));
+		}
+	}
+	/// <summary>
+	/// Disable the players movements or not
+	/// </summary>
+	/// <param name="freeze"></param>
+	public void Freeze(bool freeze = true)
+	{
+		_freeze = freeze;
+	}
+	#endregion
 
-    private void Inputs()
-    {
-        // Disable inputs when the player is frozen
-        if (_freeze)
-            return;
+	#region Returns
+	/// <summary>
+	/// Get the strongest hotspot in range of this player.
+	/// </summary>
+	/// <returns>Returns a hotspot.</returns>
+	private Hotspot ReturnBestAvailableHotspot()
+	{
+		// No hotspots in range.
+		if (_hotspotsInRange.Count == 0)
+			return null;
 
-        if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
-        {
-            _agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
+		// Get strongest hot spot in range.
+		Hotspot strongestHotspot = null;
 
-            // Look in the direction you are walking
-            _spriteRenderer.flipX = (Input.GetAxis("Horizontal") <= 0);
-        }
-    }
+		for (int i = 0; i < _hotspotsInRange.Count; i++)
+		{
+			// Skip drained hotspots.
+			if (_hotspotsInRange[i].Drained)
+				continue;
 
-    /// <summary>
-    /// Disable the players movements or not
-    /// </summary>
-    /// <param name="freeze"></param>
-    public void Freeze(bool freeze = true)
-    {
-        _freeze = freeze;
-    }
+			if (strongestHotspot == null)
+			{
+				strongestHotspot = _hotspotsInRange[i];
+			}
+			else
+			{
+				if (_hotspotsInRange[i].ReturnSignalStrength(this) > strongestHotspot.ReturnSignalStrength(this))
+					strongestHotspot = _hotspotsInRange[i];
+			}
+		}
 
-    #endregion
+		return strongestHotspot;
+	}
+	#endregion
 }
