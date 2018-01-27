@@ -35,9 +35,9 @@ public class Elevator : MonoBehaviour
     private bool _isMoving = false;
 
     /// <summary>
-    /// Is the player currently standing on this lift?
+    /// Contains a reference to the player ONLY IF the player is present.
     /// </summary>
-    private bool _playerPresent = false;
+    private Player _player = null;
 
 
     #endregion
@@ -48,7 +48,7 @@ public class Elevator : MonoBehaviour
     private void Update()
     {
         // If the player is not in the elevator or the elevator is already moving, ignore all input
-        if (!_playerPresent || _isMoving)
+        if (_player == null || _isMoving)
             return;
 
         // Check if the player wants the lift to go up or down
@@ -64,15 +64,20 @@ public class Elevator : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Set the player reference
         if (other.CompareTag("Player"))
-            _playerPresent = true;
+            _player = other.GetComponent<Player>();
 
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        // Clear the player reference
         if (other.CompareTag("Player"))
-            _playerPresent = false;
+        {
+            _player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;   
+            _player = null;
+        }
 
     }
 
@@ -86,6 +91,11 @@ public class Elevator : MonoBehaviour
     /// <param name="up">Move the lift up if true, down if false.</param>
     private IEnumerator Move(bool up = true)
     {
+        // Put the player on the elevator and disable his movement
+        _player.Freeze();
+        _player.transform.SetParent(transform);
+        _player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
         // Mark the lift as moving
         _isMoving = true;
 
@@ -110,6 +120,7 @@ public class Elevator : MonoBehaviour
             progress += Time.deltaTime * rate;
             float newPosition = Mathf.Lerp(initialPosition, destination, progress);
             transform.position = new Vector3(transform.position.x, newPosition, transform.position.z);
+            //_player.transform.position = new Vector3(_player.transform.position.x, newPosition, _player.transform.position.z);
             yield return new WaitForEndOfFrame();
         }
 
@@ -122,6 +133,10 @@ public class Elevator : MonoBehaviour
 
         // Stop playing the elevator music
         AudioPlayer.MusicSource.Stop();
+
+        // Release the player from the elevator
+        _player.Freeze(false);
+        _player.transform.SetParent(null);
     }
 
     #endregion

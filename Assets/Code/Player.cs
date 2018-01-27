@@ -15,6 +15,16 @@ public class Player : MonoBehaviour
 	/// Lists of the hotspots in range of this player.
 	/// </summary>
 	private List<Hotspot> _hotspotsInRange = new List<Hotspot>();
+
+    /// <summary>
+    /// Is the player frozen aka prohibited to move?
+    /// </summary>
+    private bool _freeze = false;
+
+    /// <summary>
+    /// The sprite renderer of the player
+    /// </summary>
+    private SpriteRenderer _spriteRenderer = null;
 	#endregion
 
 	#region Life Cycle
@@ -23,6 +33,7 @@ public class Player : MonoBehaviour
 	{
 		// Get the needed components.
 		_agent = GetComponent<Agent>();
+	    _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 	}
 
 	// Update is called once per frame
@@ -43,10 +54,27 @@ public class Player : MonoBehaviour
 	#region Methods
 	private void Inputs()
 	{
+        // Disable inputs when the player is frozen
+	    if (_freeze)
+	        return;
+
 		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
 		{
 			_agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
+
+            // Look in the direction you are walking
+		    _spriteRenderer.flipX = (Input.GetAxis("Horizontal") <= 0);
+
 		}
 	}
+
+    /// <summary>
+    /// Disable the players movements or not
+    /// </summary>
+    /// <param name="freeze"></param>
+    public void Freeze(bool freeze = true)
+    {
+        _freeze = freeze;
+    }
 	#endregion
 }
