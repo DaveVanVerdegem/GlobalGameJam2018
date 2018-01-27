@@ -10,13 +10,13 @@ public class Elevator : MonoBehaviour
     /// The distance between two floors
     /// </summary>
     [SerializeField]
-    private float _distance = 5.0f;
+    private float _distance = 1f;
 
     /// <summary>
     /// The time the lift should take to travel 1 floor
     /// </summary>
     [SerializeField]
-    private float _travelTime = 5.0f;
+    private float _travelTime = 2.6f;
 
     [Header("Audio")]
     [SerializeField]
@@ -34,21 +34,21 @@ public class Elevator : MonoBehaviour
     /// </summary>
     private bool _isMoving = false;
 
-    private AudioSource _audioSource;
+    /// <summary>
+    /// Contains a reference to the player ONLY IF the player is present.
+    /// </summary>
+    private Player _player = null;
+
 
     #endregion
 
     #region Life Cycle
 
-    private void Awake()
-    {
-        _audioSource = GetComponent<AudioSource>();
-    }
 
     private void Update()
     {
-        // If the lift is moving, ignore all input
-        if (_isMoving)
+        // If the player is not in the elevator or the elevator is already moving, ignore all input
+        if (_player == null || _isMoving)
             return;
 
         // Check if the player wants the lift to go up or down
@@ -62,6 +62,25 @@ public class Elevator : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Set the player reference
+        if (other.CompareTag("Player"))
+            _player = other.GetComponent<Player>();
+
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        // Clear the player reference
+        if (other.CompareTag("Player"))
+        {
+            _player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;   
+            _player = null;
+        }
+
+    }
+
     #endregion
 
     #region Methods
@@ -72,6 +91,11 @@ public class Elevator : MonoBehaviour
     /// <param name="up">Move the lift up if true, down if false.</param>
     private IEnumerator Move(bool up = true)
     {
+        // Put the player on the elevator and disable his movement
+        _player.Freeze();
+        _player.transform.SetParent(transform);
+        _player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
         // Mark the lift as moving
         _isMoving = true;
 
@@ -96,6 +120,7 @@ public class Elevator : MonoBehaviour
             progress += Time.deltaTime * rate;
             float newPosition = Mathf.Lerp(initialPosition, destination, progress);
             transform.position = new Vector3(transform.position.x, newPosition, transform.position.z);
+            //_player.transform.position = new Vector3(_player.transform.position.x, newPosition, _player.transform.position.z);
             yield return new WaitForEndOfFrame();
         }
 
@@ -108,6 +133,10 @@ public class Elevator : MonoBehaviour
 
         // Stop playing the elevator music
         AudioPlayer.MusicSource.Stop();
+
+        // Release the player from the elevator
+        _player.Freeze(false);
+        _player.transform.SetParent(null);
     }
 
     #endregion
