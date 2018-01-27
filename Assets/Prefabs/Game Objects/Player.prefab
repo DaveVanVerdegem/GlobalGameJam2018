@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 04961b6df0d66e04db96b7d1c77bbd6b, type: 2}
-  initialSkinName: default
+  initialSkinName: Player
   initialFlipX: 1
   initialFlipY: 0
   separatorSlotNames: []

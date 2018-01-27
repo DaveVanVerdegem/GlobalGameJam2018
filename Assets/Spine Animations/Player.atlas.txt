@@ -1,40 +1,82 @@
 
 Player.png
-size: 256,128
+size: 512,128
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-arm
+OldLady_arm
   rotate: true
   xy: 2, 2
+  size: 27, 39
+  orig: 27, 39
+  offset: 0, 0
+  index: -1
+OldLady_body
+  rotate: false
+  xy: 293, 86
+  size: 58, 40
+  orig: 58, 40
+  offset: 0, 0
+  index: -1
+OldLady_head
+  rotate: false
+  xy: 2, 31
+  size: 103, 95
+  orig: 103, 95
+  offset: 0, 0
+  index: -1
+Slav_arm
+  rotate: true
+  xy: 293, 63
+  size: 21, 38
+  orig: 21, 38
+  offset: 0, 0
+  index: -1
+Slav_body
+  rotate: false
+  xy: 404, 84
+  size: 46, 42
+  orig: 46, 42
+  offset: 0, 0
+  index: -1
+Slav_head
+  rotate: false
+  xy: 211, 48
+  size: 80, 78
+  orig: 80, 78
+  offset: 0, 0
+  index: -1
+arm
+  rotate: true
+  xy: 43, 6
   size: 23, 41
   orig: 23, 41
   offset: 0, 0
   index: -1
 arm_phone
   rotate: false
-  xy: 106, 70
+  xy: 353, 79
   size: 49, 47
   orig: 49, 47
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 106, 31
+  xy: 452, 89
   size: 38, 37
   orig: 38, 37
   offset: 0, 0
   index: -1
 head
   rotate: false
-  xy: 2, 27
+  xy: 107, 36
   size: 102, 90
   orig: 102, 90
   offset: 0, 0
   index: -1
 leg
   rotate: false
-  xy: 157, 100
+  xy: 492, 109
   size: 12, 17
   orig: 12, 17
   offset: 0, 0

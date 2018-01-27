@@ -7,11 +7,24 @@ public class Elevator : MonoBehaviour
 {
     #region SerializedFields
 
-    /// <summary>
-    /// The distance between two floors
-    /// </summary>
+    [Header("Audio")]
     [SerializeField]
-    private float _distance = 1f;
+    private ElevatorShaft _elevatorShaft = null;
+
+    /// <summary>
+    /// The bottom floor for this elevator.
+    /// </summary>
+    [Header("Limits")]
+    [Tooltip("The bottom floor for this elevator.")]
+    [SerializeField]
+    private int _bottomFloor = 0;
+
+    /// <summary>
+    /// The top floor for this elevator.
+    /// </summary>
+    [Tooltip("The top floor for this elevator.")]
+    [SerializeField]
+    private int _topFloor = 1;
 
     /// <summary>
     /// The time the lift should take to travel 1 floor
@@ -25,9 +38,6 @@ public class Elevator : MonoBehaviour
 
     [SerializeField]
     private AudioClip _arrivalSound = null;
-
-    [SerializeField]
-    private ElevatorShaft _elevatorShaft = null;
 
     #endregion
 
@@ -97,6 +107,13 @@ public class Elevator : MonoBehaviour
     /// <param name="up">Move the lift up if true, down if false.</param>
     public IEnumerator Move(bool up, bool movePlayer)
     {
+        // Avoid exceeding limits
+        if (up && Floor == _topFloor)
+            yield break;
+
+        if (!up && Floor == _bottomFloor)
+            yield break;
+
         // Mark the lift as moving
         _isMoving = true;
 
@@ -115,7 +132,7 @@ public class Elevator : MonoBehaviour
         float initialPosition = transform.position.y;
 
         // Calculate the destination
-        float destination = (up) ? initialPosition + _distance : initialPosition - _distance;
+        float destination = (up) ? initialPosition + Level.Instance.FloorHeight : initialPosition - Level.Instance.FloorHeight;
 
         // Progress of the moving
         float progress = 0f;
