@@ -5,99 +5,104 @@ using UnityEngine;
 [RequireComponent(typeof(Agent))]
 public class Player : MonoBehaviour
 {
-    #region Static Properties
-    /// <summary>
-    /// Reference to this player object.
-    /// </summary>
-    public static Player Instance;
-    #endregion
+	#region Static Properties
+	/// <summary>
+	/// Reference to this player object.
+	/// </summary>
+	public static Player Instance;
+	#endregion
 
-    #region Properties
+	#region Properties
 
-    /// <summary>
-    /// The floor the player is currently on.
-    /// </summary>
-    public int Floor = 0;
-    #endregion
+	/// <summary>
+	/// The floor the player is currently on.
+	/// </summary>
+	public int Floor = 0;
+	#endregion
 
-    #region Fields
-    /// <summary>
-    /// Attached agent component.
-    /// </summary>
-    private Agent _agent;
+	#region Fields
+	/// <summary>
+	/// Attached agent component.
+	/// </summary>
+	private Agent _agent;
 
-    /// <summary>
-    /// Lists of the hotspots in range of this player.
-    /// </summary>
-    private List<Hotspot> _hotspotsInRange = new List<Hotspot>();
+	/// <summary>
+	/// Lists of the hotspots in range of this player.
+	/// </summary>
+	private List<Hotspot> _hotspotsInRange = new List<Hotspot>();
 
-    /// <summary>
-    /// Hotspot that the player is currently connected to.
-    /// </summary>
-    private Hotspot _connectedHotspot;
-    /// <summary>
-    /// Is the player frozen aka prohibited to move?
-    /// </summary>
-    private bool _freeze = false;
-    #endregion
+	/// <summary>
+	/// Hotspot that the player is currently connected to.
+	/// </summary>
+	private Hotspot _connectedHotspot;
+	/// <summary>
+	/// Is the player frozen aka prohibited to move?
+	/// </summary>
+	private bool _freeze = false;
 
-    #region Life Cycle
-    // Use this for initialization
-    private void Awake()
-    {
-        // Set the instance.
-        if (Instance == null)
-            Instance = this;
+	/// <summary>
+	/// Data that the player has already downloaded.
+	/// </summary>
+	private float _downloadedData;
+	#endregion
 
-        // Get the needed components.
-        _agent = GetComponent<Agent>();
-    }
+	#region Life Cycle
+	// Use this for initialization
+	private void Awake()
+	{
+		// Set the instance.
+		if (Instance == null)
+			Instance = this;
 
-    // Update is called once per frame
-    private void Update()
-    {
-        // Get all the hotspots in range of this player.
-        _hotspotsInRange = Hotspot.ReturnHotspotsInRange(this);
+		// Get the needed components.
+		_agent = GetComponent<Agent>();
+	}
 
-        // Handle the inputs.
-        Inputs();
+	// Update is called once per frame
+	private void Update()
+	{
+		// Get all the hotspots in range of this player.
+		_hotspotsInRange = Hotspot.ReturnHotspotsInRange(this);
 
-        if (_connectedHotspot != null)
-        {
-            // Disconnect if the hotspot is drained.
-            if (_connectedHotspot.Drained)
-                _connectedHotspot = null;
-            else
-            {
-                // Get data from the connected hot spot.
-                // Debug.Log(string.Format("Getting {0} of data.", _connectedHotspot.ReturnData(this)));
-            }
-        }
-    }
+		// Handle the inputs.
+		Inputs();
+
+		if (_connectedHotspot != null)
+		{
+			// Disconnect if the hotspot is drained.
+			if (_connectedHotspot.Drained)
+				_connectedHotspot = null;
+			else
+			{
+				// Get data from the connected hot spot.
+				_downloadedData += _connectedHotspot.ReturnData(this);
+			}
+		}
+	}
 
 	private void OnDisable()
 	{
 		Instance = null;
 	}
-    #endregion
+	#endregion
 
-    #region Methods
-    private void Inputs()
-    {
-        // Movement controls.
-        // Disable inputs when the player is frozen
-        if (_freeze)
-            return;
+	#region Methods
+	private void Inputs()
+	{
+		// Movement controls.
+		// Disable inputs when the player is frozen
+		if (_freeze)
+			return;
 
 		// Movement controls.
-        if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
-        {
-            _agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
-        }
+		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
+		{
+			_agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
+		}
 
-        // Wifi controls.
-        if (Input.GetButtonUp("Connect"))
-        {
+		// Wifi controls.
+		if (Input.GetButtonUp("Connect"))
+		{
 			// Connect to new hotspot.
 			if (_connectedHotspot == null)
 			{
@@ -113,50 +118,50 @@ public class Player : MonoBehaviour
 
 				Debug.Log(string.Format("Disconnected from hotspot."));
 			}
-        }
-    }
-    /// <summary>
+		}
+	}
+	/// <summary>
 	/// Disable the players input or not.
-    /// </summary>
+	/// </summary>
 	/// <param name="freeze">Freeze the inputs of the player.</param>
-    public void Freeze(bool freeze = true)
-    {
-        _freeze = freeze;
-    }
-    #endregion
+	public void Freeze(bool freeze = true)
+	{
+		_freeze = freeze;
+	}
+	#endregion
 
-    #region Returns
-    /// <summary>
-    /// Get the strongest hotspot in range of this player.
-    /// </summary>
-    /// <returns>Returns a hotspot.</returns>
-    private Hotspot ReturnBestAvailableHotspot()
-    {
-        // No hotspots in range.
-        if (_hotspotsInRange.Count == 0)
-            return null;
+	#region Returns
+	/// <summary>
+	/// Get the strongest hotspot in range of this player.
+	/// </summary>
+	/// <returns>Returns a hotspot.</returns>
+	private Hotspot ReturnBestAvailableHotspot()
+	{
+		// No hotspots in range.
+		if (_hotspotsInRange.Count == 0)
+			return null;
 
-        // Get strongest hot spot in range.
-        Hotspot strongestHotspot = null;
+		// Get strongest hot spot in range.
+		Hotspot strongestHotspot = null;
 
-        for (int i = 0; i < _hotspotsInRange.Count; i++)
-        {
-            // Skip drained hotspots.
-            if (_hotspotsInRange[i].Drained)
-                continue;
+		for (int i = 0; i < _hotspotsInRange.Count; i++)
+		{
+			// Skip drained hotspots.
+			if (_hotspotsInRange[i].Drained)
+				continue;
 
-            if (strongestHotspot == null)
-            {
-                strongestHotspot = _hotspotsInRange[i];
-            }
-            else
-            {
-                if (_hotspotsInRange[i].ReturnSignalStrength(this) > strongestHotspot.ReturnSignalStrength(this))
-                    strongestHotspot = _hotspotsInRange[i];
-            }
-        }
+			if (strongestHotspot == null)
+			{
+				strongestHotspot = _hotspotsInRange[i];
+			}
+			else
+			{
+				if (_hotspotsInRange[i].ReturnSignalStrength(this) > strongestHotspot.ReturnSignalStrength(this))
+					strongestHotspot = _hotspotsInRange[i];
+			}
+		}
 
-        return strongestHotspot;
-    }
-    #endregion
+		return strongestHotspot;
+	}
+	#endregion
 }

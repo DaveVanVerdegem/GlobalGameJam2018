@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 25142197}
   - component: {fileID: 25142196}
   - component: {fileID: 25142195}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ElevatorShaft_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 39939381}
   - component: {fileID: 39939380}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Left (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,7 +587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 226490048}
   - component: {fileID: 226490047}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Left (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -641,7 +641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 287318075}
   - component: {fileID: 287318074}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Left (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,7 +806,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4127570192676600, guid: d93b03bad95d93943bcac46bf90cde0f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -8.55
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 4127570192676600, guid: d93b03bad95d93943bcac46bf90cde0f, type: 2}
       propertyPath: m_LocalPosition.y
@@ -848,7 +848,7 @@ GameObject:
   m_Component:
   - component: {fileID: 338393216}
   - component: {fileID: 338393217}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Right (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -902,7 +902,7 @@ GameObject:
   m_Component:
   - component: {fileID: 404872957}
   - component: {fileID: 404872956}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Left (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1042,7 +1042,7 @@ GameObject:
   m_Component:
   - component: {fileID: 533560123}
   - component: {fileID: 533560122}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1312,7 +1312,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4716604847677020, guid: 5d4687ef59f021b46bca71613ecadc62, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8.03
       objectReference: {fileID: 0}
     - target: {fileID: 4716604847677020, guid: 5d4687ef59f021b46bca71613ecadc62, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1466,7 +1466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 905858849}
   - component: {fileID: 905858850}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1879,7 +1879,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1212631913}
   - component: {fileID: 1212631914}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Right (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1933,7 +1933,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1220657088}
   - component: {fileID: 1220657089}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Right (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2129,7 +2129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1281045018}
   - component: {fileID: 1281045017}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Left (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2174,6 +2174,106 @@ Transform:
   m_Father: {fileID: 25142197}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1303330506
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224445327355160960, guid: a715227a71147ec4eabe376735438a3b,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a715227a71147ec4eabe376735438a3b, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1326972229
 Prefab:
   m_ObjectHideFlags: 0
@@ -2451,6 +2551,18 @@ Prefab:
       propertyPath: m_Name
       value: Elevator_Right
       objectReference: {fileID: 0}
+    - target: {fileID: 1595756572609828, guid: c7c66f957094c5a45946396db1d13256, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589785444448704, guid: c7c66f957094c5a45946396db1d13256, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1383183130505656, guid: c7c66f957094c5a45946396db1d13256, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c7c66f957094c5a45946396db1d13256, type: 2}
   m_IsPrefabParent: 0
@@ -2469,7 +2581,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1524321189}
   - component: {fileID: 1524321190}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Right (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3091,7 +3203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1836427825}
   - component: {fileID: 1836427824}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Left (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3257,7 +3369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1902229781}
   - component: {fileID: 1902229780}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Left (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3311,7 +3423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1907487366}
   - component: {fileID: 1907487367}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Right (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3366,7 +3478,7 @@ GameObject:
   - component: {fileID: 1956370500}
   - component: {fileID: 1956370501}
   - component: {fileID: 1956370499}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ElevatorShaft_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3566,7 +3678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2026092425}
   - component: {fileID: 2026092426}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Right (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3680,7 +3792,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032448134}
   - component: {fileID: 2032448135}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor_Door_Right (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3773,6 +3885,18 @@ Prefab:
       propertyPath: _elevatorShaft
       value: 
       objectReference: {fileID: 25142196}
+    - target: {fileID: 1383183130505656, guid: c7c66f957094c5a45946396db1d13256, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589785444448704, guid: c7c66f957094c5a45946396db1d13256, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595756572609828, guid: c7c66f957094c5a45946396db1d13256, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c7c66f957094c5a45946396db1d13256, type: 2}
   m_IsPrefabParent: 0

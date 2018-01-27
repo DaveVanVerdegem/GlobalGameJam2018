@@ -132,7 +132,8 @@ MonoBehaviour:
   _detectionRange: 5
   _detectionMask:
     serializedVersion: 2
-    m_Bits: 4294966783
+    m_Bits: 4294965759
+  _catchRange: 1
 --- !u!114 &114590112035377560
 MonoBehaviour:
   m_ObjectHideFlags: 1
