@@ -8,6 +8,13 @@ public class GameManager : MonoBehaviour
 	#region Inspector Fields
 	[Header("GUI")]
 	/// <summary>
+	/// Pause menu.
+	/// </summary>
+	[Tooltip("Pause menu.")]
+	[SerializeField]
+	private GameObject _pauseMenu;
+
+	/// <summary>
 	/// Game over panel.
 	/// </summary>
 	[Tooltip("Game over panel.")]
@@ -24,6 +31,7 @@ public class GameManager : MonoBehaviour
 	/// <summary>
 	/// The game is over.
 	/// </summary>
+	[HideInInspector]
 	public bool GameOver;
 	#endregion
 
@@ -35,11 +43,18 @@ public class GameManager : MonoBehaviour
 			Instance = this;
 		else
 			Destroy(gameObject);
+
+		// Make sure that the game isn't paused.
+		Time.timeScale = 1;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		if (Input.GetKeyUp(KeyCode.Escape))
+		{
+			Pause(!_pauseMenu.activeSelf);
+		}
 	}
 	#endregion
 
@@ -61,6 +76,9 @@ public class GameManager : MonoBehaviour
 		_gameOverPanel.SetActive(true);
 	}
 
+	/// <summary>
+	/// Restarts the game level.
+	/// </summary>
 	public void RestartLevel()
 	{
 		// Unpause the game.
@@ -70,6 +88,28 @@ public class GameManager : MonoBehaviour
 
 		// Reload the active scene.
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
+	/// <summary>
+	/// Pause or resume the game.
+	/// </summary>
+	/// <param name="paused">Set true to pause or false to resume the game.</param>
+	public void Pause(bool paused)
+	{
+		// Pause time.
+		Time.timeScale = (paused) ? 0 : 1;
+
+		// Set display of pause menu.
+		_pauseMenu.SetActive(paused);
+	}
+
+	/// <summary>
+	/// Loads the given scene.
+	/// </summary>
+	/// <param name="scene">Scene to load.</param>
+	public void LoadScene(string scene)
+	{
+		SceneManager.LoadScene(scene);
 	}
 	#endregion
 }
