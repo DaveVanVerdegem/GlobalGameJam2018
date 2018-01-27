@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
 		if (_connectedHotspot != null)
 		{
 			// Disconnect if the hotspot is drained.
-			if (_connectedHotspot.Drained)
+			if (_connectedHotspot.Drained || _connectedHotspot.ReturnSignalStrength(this) == 0)
 				_connectedHotspot = null;
 			else
 			{
