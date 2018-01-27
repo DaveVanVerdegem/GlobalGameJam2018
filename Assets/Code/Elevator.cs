@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -59,15 +60,14 @@ public class Elevator : MonoBehaviour
         if (_player == null || _isMoving)
             return;
 
+        // Retrieve the vertical axis
+        float verticalAxis = Input.GetAxis("Vertical");
+        float tolerance = 0.1f;
+        if (Math.Abs(Mathf.Abs(verticalAxis)) < tolerance)
+            return;
+
         // Check if the player wants the lift to go up or down
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            StartCoroutine(Move(true, true));
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            StartCoroutine(Move(false, true));
-        }
+        StartCoroutine((verticalAxis > 0) ? Move(true, true) : Move(false, true));
     }
 
     private void OnTriggerEnter2D(Collider2D other)

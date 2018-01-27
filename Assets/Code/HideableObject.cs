@@ -7,27 +7,19 @@ public class HideableObject : MonoBehaviour
     #region Fields
 
     /// <summary>
-    /// The renderer of this object.
+    /// Contains a reference to the player renderer ONLY IF the player is in the interactable area.
     /// </summary>
-    private Renderer _renderer = null;
+    private Renderer _playerRenderer = null;
 
-    /// <summary>
-    /// Contains a reference to the player ONLY IF the player is in the interactable area.
-    /// </summary>
-    private Player _player = null;
     #endregion
 
     #region Life Cycle
-    private void Awake()
-    {
-        _renderer = GetComponent<Renderer>();
-    }
 
     // Update is called once per frame
     private void Update()
     {
         // Ignore input if player is not present in the interactable area
-        if (_player == null)
+        if (_playerRenderer == null)
             return;
 
         // Toggle the renderer if the activate key is pressed
@@ -39,14 +31,20 @@ public class HideableObject : MonoBehaviour
     {
         // Update the player reference
         if (other.CompareTag("Player"))
-            _player = other.GetComponent<Player>();
+            _playerRenderer = other.GetComponentInChildren<Renderer>();
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        // Clear the player reference
-        if (other.CompareTag("Player"))
-            _player = null;
+        // Ignore everything but the player
+        if (!other.CompareTag("Player"))
+            return;
+
+        // Make sure the player is not hidden anymore
+        _playerRenderer.enabled = true;
+
+        // Clear the reference
+        _playerRenderer = null;
     }
 
     #endregion
@@ -55,7 +53,7 @@ public class HideableObject : MonoBehaviour
 
     private void ToggleHide()
     {
-        _renderer.enabled = !_renderer.enabled;
+        _playerRenderer.enabled = !_playerRenderer.enabled;
     }
     #endregion
 }
