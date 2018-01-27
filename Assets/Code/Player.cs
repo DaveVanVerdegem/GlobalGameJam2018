@@ -15,13 +15,6 @@ public class Player : MonoBehaviour
 	private Material _downloadMaterial = null;
 
 	/// <summary>
-	/// The icon that displays the signal strength.
-	/// </summary>
-	[Tooltip("The icon that displays the signal strength.")]
-	[SerializeField]
-	private SignalStrengthIcon _signalStrengthIcon = null;
-
-	/// <summary>
 	/// The icon that is displayed when the player can interact with the environment.
 	/// </summary>
 	[Tooltip("The icon that is displayed when the player can interact with the environment.")]
@@ -245,7 +238,7 @@ public class Player : MonoBehaviour
 	/// <param name="signalStrength">Signal strength to set icon to.</param>
 	public void UpdateSignalStrengthIcon(float signalStrength)
 	{
-		_signalStrengthIcon.UpdateSprite(signalStrength);
+		Phone.Instance.SignalStrengthIcon.UpdateSprite(signalStrength);
 	}
 
 	/// <summary>

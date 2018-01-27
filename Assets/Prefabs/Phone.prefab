@@ -71,11 +71,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224206439671446276}
+  - component: {fileID: 114243121870048676}
   - component: {fileID: 223776109231626340}
   - component: {fileID: 114546883780005310}
   - component: {fileID: 114078471588615522}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Phone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,6 +98,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114243121870048676
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962486454337618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c51bee5658c59408fc7902136e6f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SignalStrengthIcon: {fileID: 114532011258965970}
 --- !u!114 &114412386980320396
 MonoBehaviour:
   m_ObjectHideFlags: 1
