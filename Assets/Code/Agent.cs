@@ -53,9 +53,12 @@ public class Agent : MonoBehaviour
 	{
 		transform.Translate(Vector2.right * direction * _speed);
 
-		// Have the agent face the direction it's moving in.
-		FacingRight = (direction >= 0);
-		_skeletonAnimation.transform.localScale = (FacingRight) ? Vector3.one : new Vector3(-1f, 1, 1);
+		if (Mathf.Abs(direction) > 0)
+		{
+			// Have the agent face the direction it's moving in.
+			FacingRight = (direction >= 0);
+			_skeletonAnimation.transform.localScale = (FacingRight) ? Vector3.one : new Vector3(-1f, 1, 1);
+		}
 
 		// Set the right animation.
 		_skeletonAnimation.AnimationName = (Mathf.Abs(direction) > 0) ? "walk" : "idle";
