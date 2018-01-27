@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 1290881466227340}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.736, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 4127570192676600}
   m_RootOrder: 3
@@ -365,8 +365,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _downloadMaterial: {fileID: 2100000, guid: 7624d611bd330e44b80ef65275598a16, type: 2}
-  _signalStrengthIcon: {fileID: 0}
   _interactableIcon: {fileID: 212398926061269680}
+  _dataToDownload: 100
+  _roundingMargin: 1
   Floor: 0
   NearbyHideableObject: {fileID: 0}
   Hidden: 0

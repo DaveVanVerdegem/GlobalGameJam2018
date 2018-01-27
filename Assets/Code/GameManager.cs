@@ -20,6 +20,13 @@ public class GameManager : MonoBehaviour
     [Tooltip("Game over panel.")]
     [SerializeField]
     private GameObject _gameOverPanel;
+
+	/// <summary>
+	/// Win panel.
+	/// </summary>
+	[Tooltip("Win panel.")]
+	[SerializeField]
+	private GameObject _winPanel;
     #endregion
 
     #region Properties
@@ -64,6 +71,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void TriggerGameOver()
     {
+		// Don't trigger the game over multiple times.
+		if (GameOver)
+			return;
+
         // Enable game over state.
         GameOver = true;
 
@@ -74,9 +85,27 @@ public class GameManager : MonoBehaviour
 
         // Show the game over panel.
         _gameOverPanel.SetActive(true);
+	}
 
-        // Reset the image
-        Player.Instance.UpdateProgress(true);
+	/// <summary>
+	/// Triggers the win state of the game.
+	/// </summary>
+	public void TriggerWin()
+	{
+		// Don't trigger the win multiple times.
+		if (GameOver)
+			return;
+
+		// Enable game over state.
+		GameOver = true;
+
+		// Pause the game.
+		Time.timeScale = 0;
+
+		Debug.Log("Win triggered.");
+
+		// Show the win panel.
+		_winPanel.SetActive(true);
     }
 
     /// <summary>
