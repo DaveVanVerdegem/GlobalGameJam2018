@@ -5,6 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(Agent))]
 public class Player : MonoBehaviour
 {
+	#region Static Properties
+	/// <summary>
+	/// Reference to this player object.
+	/// </summary>
+	public static Player Instance;
+	#endregion
+
 	#region Fields
 	/// <summary>
 	/// Attached agent component.
@@ -24,20 +31,18 @@ public class Player : MonoBehaviour
 	/// Is the player frozen aka prohibited to move?
 	/// </summary>
 	private bool _freeze = false;
-
-	/// <summary>
-	/// The sprite renderer of the player
-	/// </summary>
-	private SpriteRenderer _spriteRenderer = null;
 	#endregion
 
 	#region Life Cycle
 	// Use this for initialization
 	private void Awake()
 	{
+		// Set the instance.
+		if (Instance == null)
+			Instance = this;
+
 		// Get the needed components.
 		_agent = GetComponent<Agent>();
-		_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 	}
 
 	// Update is called once per frame
@@ -74,9 +79,6 @@ public class Player : MonoBehaviour
 		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
 		{
 			_agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
-
-			// Look in the direction you are walking
-			_spriteRenderer.flipX = (Input.GetAxis("Horizontal") <= 0);
 		}
 
 		// Wifi controls.
