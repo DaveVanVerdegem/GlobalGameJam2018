@@ -42,7 +42,7 @@ public class Hotspot : MonoBehaviour
 
 	#region Life Cycle
 	// Use this for initialization
-	private void Awake()
+	private void Start()
 	{
 		// Add the hot spot to the scene list.
 		if (!Hotspots.Contains(this))
