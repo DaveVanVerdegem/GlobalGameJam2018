@@ -81,7 +81,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1383183130505656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.85, y: 1.2101645, z: 0}
+  m_LocalPosition: {x: -13.98, y: 6.99, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children:
   - {fileID: 4899506354800724}
@@ -97,7 +97,7 @@ Transform:
   m_GameObject: {fileID: 1595756572609828}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.01, y: -0.006, z: 0}
-  m_LocalScale: {x: 7.3896194, y: 7.389621, z: 7.389621}
+  m_LocalScale: {x: 13.763165, y: 7.389621, z: 7.389621}
   m_Children: []
   m_Father: {fileID: 4490213370096606}
   m_RootOrder: 0
@@ -146,7 +146,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.47011316}
+  m_Offset: {x: -0.027321815, y: -0.39595413}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -157,7 +157,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.059773684}
+  m_Size: {x: 1.9757767, y: 0.13002968}
   m_EdgeRadius: 0
 --- !u!114 &114539720554524622
 MonoBehaviour:
@@ -170,11 +170,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3fec075791f56459bc43a4de125d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distance: 2
+  _elevatorShaft: {fileID: 0}
+  _bottomFloor: 0
+  _topFloor: 1
   _travelTime: 2.6
   _elevatorMusic: {fileID: 8300000, guid: 7592de24b91ad3d46b4cdbde38a65e6d, type: 3}
   _arrivalSound: {fileID: 8300000, guid: 202a32f049b423b4289a96d2a2afc89b, type: 3}
-  _elevatorShaft: {fileID: 0}
   Floor: 0
 --- !u!212 &212293207301627876
 SpriteRenderer:
