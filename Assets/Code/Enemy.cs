@@ -200,9 +200,9 @@ public class Enemy : MonoBehaviour
 
 		// Move to idle target.
 		if (_idleTarget.x > transform.position.x)
-			_agent.Move(.5f * Time.deltaTime);
+			_agent.Move(.25f * Time.deltaTime);
 		else
-			_agent.Move(-.5f * Time.deltaTime);
+			_agent.Move(-.25f * Time.deltaTime);
 	}
 	#endregion
 }
