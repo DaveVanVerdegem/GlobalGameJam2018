@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Agent))]
 public class Player : MonoBehaviour
@@ -19,6 +20,12 @@ public class Player : MonoBehaviour
     [Tooltip("The icon that displays the signal strength.")]
     [SerializeField]
     private SignalStrengthIcon _signalStrengthIcon = null;
+
+    /// <summary>
+    /// The icon that is displayed when the player can interact with the environment.
+    /// </summary>
+    [SerializeField]
+    private SpriteRenderer _interactableIcon = null;
 
     #endregion
 
@@ -214,6 +221,11 @@ public class Player : MonoBehaviour
     public void UpdateSignalStrengthIcon(float signalStrength)
     {
         _signalStrengthIcon.UpdateSprite(signalStrength);
+    }
+
+    public void ShowInteractableIcon(bool show = true)
+    {
+        _interactableIcon.enabled = show;
     }
     #endregion
 

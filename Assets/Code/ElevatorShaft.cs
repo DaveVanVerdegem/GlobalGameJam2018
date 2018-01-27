@@ -12,12 +12,6 @@ public class ElevatorShaft : MonoBehaviour
     [SerializeField]
     private Elevator _elevator = null;
 
-    /// <summary>
-    /// The text that displays the information for calling the elevator.
-    /// </summary>
-    [SerializeField]
-    private Text _elevatorCallingInfo = null;
-
     [SerializeField]
     private List<Collider2D> _floorElevatorColliders = null;
 
@@ -70,7 +64,7 @@ public class ElevatorShaft : MonoBehaviour
 
         // Display the information if the elevator is not at the current floor
         if (_elevator.Floor != _player.Floor)
-            _elevatorCallingInfo.enabled = true;
+            _player.ShowInteractableIcon();
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -79,11 +73,11 @@ public class ElevatorShaft : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
+        // Hide the information
+        _player.ShowInteractableIcon(false);
+
         // Reset the player reference
         _player = null;
-
-        // Hide the information
-        _elevatorCallingInfo.enabled = false;
     }
 
     #endregion
@@ -111,7 +105,7 @@ public class ElevatorShaft : MonoBehaviour
         }
 
         // Hide the information
-        _elevatorCallingInfo.enabled = false;
+        _player.ShowInteractableIcon(false);
 
         // Reset the boolean so the elevator can be called again if it is not on a floor
         _isCalled = false;
