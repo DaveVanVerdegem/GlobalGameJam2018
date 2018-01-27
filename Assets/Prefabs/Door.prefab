@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4023771784006452}
   - component: {fileID: 61849123335318892}
   - component: {fileID: 212376792285296110}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Door_Closed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1598008919
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f0be777544f045c4b987877e8ae09510, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
