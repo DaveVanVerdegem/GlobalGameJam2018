@@ -892,7 +892,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4577386899722996, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114214079057967794, guid: 0a44a25314b68e04caf213441c51de62,
         type: 2}
@@ -901,7 +901,7 @@ Prefab:
       objectReference: {fileID: 1108461882}
     - target: {fileID: 1936558114562474, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
       propertyPath: m_Name
-      value: ElevatorShaft (3)
+      value: ElevatorShaft (2)
       objectReference: {fileID: 0}
     - target: {fileID: 114220811954804616, guid: 0a44a25314b68e04caf213441c51de62,
         type: 2}
@@ -955,6 +955,10 @@ Prefab:
         type: 2}
       propertyPath: Floor
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936558114562474, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
@@ -3728,6 +3732,16 @@ Prefab:
       propertyPath: TopFloor
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114220811954804616, guid: 0a44a25314b68e04caf213441c51de62,
+        type: 2}
+      propertyPath: Floor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220811954804616, guid: 0a44a25314b68e04caf213441c51de62,
+        type: 2}
+      propertyPath: BottomFloor
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
   m_IsPrefabParent: 0
@@ -3885,21 +3899,6 @@ Prefab:
       propertyPath: _elevatorCallingInfo
       value: 
       objectReference: {fileID: 1108461882}
-    - target: {fileID: 114220811954804616, guid: 0a44a25314b68e04caf213441c51de62,
-        type: 2}
-      propertyPath: Floor
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114220811954804616, guid: 0a44a25314b68e04caf213441c51de62,
-        type: 2}
-      propertyPath: TopFloor
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114220811954804616, guid: 0a44a25314b68e04caf213441c51de62,
-        type: 2}
-      propertyPath: BottomFloor
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
   m_IsPrefabParent: 0
@@ -4257,7 +4256,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4577386899722996, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 114214079057967794, guid: 0a44a25314b68e04caf213441c51de62,
         type: 2}
@@ -4266,7 +4265,7 @@ Prefab:
       objectReference: {fileID: 1108461882}
     - target: {fileID: 1936558114562474, guid: 0a44a25314b68e04caf213441c51de62, type: 2}
       propertyPath: m_Name
-      value: ElevatorShaft (2)
+      value: ElevatorShaft (3)
       objectReference: {fileID: 0}
     - target: {fileID: 114220811954804616, guid: 0a44a25314b68e04caf213441c51de62,
         type: 2}
@@ -4325,6 +4324,16 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220811954804616, guid: 0a44a25314b68e04caf213441c51de62,
+        type: 2}
+      propertyPath: Floor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220811954804616, guid: 0a44a25314b68e04caf213441c51de62,
+        type: 2}
+      propertyPath: BottomFloor
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 61645287668698276, guid: 0a44a25314b68e04caf213441c51de62, type: 2}

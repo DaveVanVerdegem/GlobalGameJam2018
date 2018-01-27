@@ -29,6 +29,11 @@ public class ElevatorShaft : MonoBehaviour
     /// This only contains a reference when the player is INSIDE one of the interaction areas.
     /// </summary>
     private Player _player;
+
+    /// <summary>
+    /// Bool to prevent multiple calls.
+    /// </summary>
+    private bool _isCalled = false;
     #endregion
 
     #region Life Cycle
@@ -47,8 +52,11 @@ public class ElevatorShaft : MonoBehaviour
             return;
 
         // Call the elevator if the activate button is pressed
-        if (Input.GetButtonDown("Activate"))
+        if (!_isCalled && Input.GetButtonDown("Activate"))
+        {
             StartCoroutine(CallElevator());
+            _isCalled = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -104,6 +112,9 @@ public class ElevatorShaft : MonoBehaviour
 
         // Hide the information
         _elevatorCallingInfo.enabled = false;
+
+        // Reset the boolean so the elevator can be called again if it is not on a floor
+        _isCalled = false;
     }
 
     /// <summary>
