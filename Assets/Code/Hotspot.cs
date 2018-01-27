@@ -141,7 +141,12 @@ public class Hotspot : MonoBehaviour
 	/// <returns>Returns al list of hotspots.</returns>
 	public static List<Hotspot> ReturnHotspotsInRange(Player player)
 	{
-		return Hotspots;
+		List<Hotspot> hotspotsInRange = new List<Hotspot>(Hotspots);
+
+		// Remove all the hotspots that are too far from the player.
+		hotspotsInRange.RemoveAll(hotspot => Vector2.Distance(player.transform.position, hotspot.transform.position) > hotspot.Range);
+
+		return hotspotsInRange;
 	}
 	#endregion
 }
