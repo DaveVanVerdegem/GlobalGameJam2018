@@ -53,7 +53,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4899506354800724}
-  - component: {fileID: 212293207301627876}
+  - component: {fileID: 212432039343355306}
   m_Layer: 10
   m_Name: Sprite
   m_TagString: Untagged
@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1589785444448704}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.096, z: 0}
+  m_LocalPosition: {x: 0, y: -0.402, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4490213370096606}
@@ -82,7 +82,7 @@ Transform:
   m_GameObject: {fileID: 1383183130505656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -13.98, y: 6.99, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4899506354800724}
   - {fileID: 4192636051373070}
@@ -96,8 +96,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1595756572609828}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -0.006, z: 0}
-  m_LocalScale: {x: 13.763165, y: 7.389621, z: 7.389621}
+  m_LocalPosition: {x: -0.034, y: -0.002, z: 0}
+  m_LocalScale: {x: 0.93923235, y: 0.93923235, z: 0.93923235}
   m_Children: []
   m_Father: {fileID: 4490213370096606}
   m_RootOrder: 0
@@ -171,13 +171,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _elevatorShaft: {fileID: 0}
-  _bottomFloor: 0
-  _topFloor: 1
   _travelTime: 2.6
   _elevatorMusic: {fileID: 8300000, guid: 7592de24b91ad3d46b4cdbde38a65e6d, type: 3}
   _arrivalSound: {fileID: 8300000, guid: 202a32f049b423b4289a96d2a2afc89b, type: 3}
-  Floor: 0
---- !u!212 &212293207301627876
+  TopFloor: 5
+  BottomFloor: 3
+  Floor: 3
+--- !u!212 &212432039343355306
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -211,12 +211,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 0dbbca3bbc7330c45a7ab28e5e888a6b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.48, y: 0.68}
+  m_Size: {x: 1.69, y: 1.83}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

@@ -108,8 +108,9 @@ public class ElevatorShaft : MonoBehaviour
     /// </summary>
     public void UpdateDoorColliders()
     {
+        // Use the bottom floor as offset
         for (int i = 0; i < _floorElevatorColliders.Count; ++i)
-            _floorElevatorColliders[i].enabled = (i != _elevator.Floor);
+            _floorElevatorColliders[i].enabled = (i != _elevator.Floor - _elevator.BottomFloor);
     }
     #endregion
 }

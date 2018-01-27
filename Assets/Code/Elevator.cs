@@ -12,21 +12,6 @@ public class Elevator : MonoBehaviour
     private ElevatorShaft _elevatorShaft = null;
 
     /// <summary>
-    /// The bottom floor for this elevator.
-    /// </summary>
-    [Header("Limits")]
-    [Tooltip("The bottom floor for this elevator.")]
-    [SerializeField]
-    private int _bottomFloor = 0;
-
-    /// <summary>
-    /// The top floor for this elevator.
-    /// </summary>
-    [Tooltip("The top floor for this elevator.")]
-    [SerializeField]
-    private int _topFloor = 1;
-
-    /// <summary>
     /// The time the lift should take to travel 1 floor
     /// </summary>
     [SerializeField]
@@ -42,9 +27,23 @@ public class Elevator : MonoBehaviour
     #endregion
 
     #region Properties
+    [Header("Limits")]
+    /// <summary>
+    /// The top floor for this elevator.
+    /// </summary>
+    [Tooltip("The top floor for this elevator.")]
+    public int TopFloor = 1;
+
+    /// <summary>
+    /// The bottom floor for this elevator.
+    /// </summary>
+    [Tooltip("The bottom floor for this elevator.")]
+    public int BottomFloor = 0;
+
     /// <summary>
     /// The floor the elevator is on.
     /// </summary>
+    [Tooltip("Set this as the floor the elevator is starting on.")]
     public int Floor = 0;
     #endregion
 
@@ -108,10 +107,10 @@ public class Elevator : MonoBehaviour
     public IEnumerator Move(bool up, bool movePlayer)
     {
         // Avoid exceeding limits
-        if (up && Floor == _topFloor)
+        if (up && Floor == TopFloor)
             yield break;
 
-        if (!up && Floor == _bottomFloor)
+        if (!up && Floor == BottomFloor)
             yield break;
 
         // Mark the lift as moving
