@@ -4,80 +4,73 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    #region Serialized fields
+	#region Serialized fields
+	/// <summary>
+	/// The collider for the door, impassable.
+	/// </summary>
+	[SerializeField]
+	private Collider2D _doorCollider = null;
+	#endregion
 
-    /// <summary>
-    /// The collider for the door, impassable.
-    /// </summary>
-    [SerializeField]
-    private Collider2D _doorCollider = null;
+	#region Fields
+	/// <summary>
+	/// Is this door open?
+	/// </summary>
+	private bool _isOpen = false;
 
-    #endregion
-    #region Fields
+	/// <summary>
+	/// Contains a reference to the player ONLY IF the player is present in the interaction area.
+	/// </summary>
+	private Player _player = null;
 
-    /// <summary>
-    /// Is this door open?
-    /// </summary>
-    private bool _isOpen = false;
+	/// <summary>
+	/// The sprite renderer for the door.
+	/// </summary>
+	private SpriteRenderer _spriteRenderer = null;
+	#endregion
 
-    /// <summary>
-    /// Contains a reference to the player ONLY IF the player is present in the interaction area.
-    /// </summary>
-    private Player _player = null;
+	#region Life Cycle
+	private void Awake()
+	{
+		// Retrieve the components
+		_spriteRenderer = GetComponent<SpriteRenderer>();
+	}
 
-    /// <summary>
-    /// The sprite renderer for the door.
-    /// </summary>
-    private SpriteRenderer _spriteRenderer = null;
+	private void Update()
+	{
+		// If there is no player reference, no interaction check is needed
+		if (_player == null)
+			return;
 
-    #endregion
+		// Check if the player presses the interaction key
+		if (Input.GetButtonDown("Activate"))
+			Interact();
+	}
+	#endregion
 
-    #region Life Cycle
+	#region Methods
+	public void Interact()
+	{
+		// Toggle the open
+		_isOpen = !_isOpen;
 
-    private void Awake()
-    {
-        // Retrieve the components
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+		// Toggle the collider and sprite renderer
+		_doorCollider.enabled = !_isOpen;
+		_spriteRenderer.enabled = !_isOpen;
+	}
 
-    private void Update()
-    {
-        // If there is no player reference, no interaction check is needed
-        if (_player == null)
-            return;
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		// Set the player reference
+		if (other.CompareTag("Player"))
+			_player = other.GetComponent<Player>();
+	}
 
-        // Check if the player presses the interaction key
-        if (Input.GetButtonDown("Activate"))
-            Interact();
-    }
-
-    #endregion
-
-    #region Methods
-
-    public void Interact()
-    {
-        // Toggle the open
-        _isOpen = !_isOpen;
-
-        // Toggle the collider and sprite renderer
-        _doorCollider.enabled = !_isOpen;
-        _spriteRenderer.enabled = !_isOpen;
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // Set the player reference
-        if (other.CompareTag("Player"))
-            _player = other.GetComponent<Player>();
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        // Clear the player reference
-        if (other.CompareTag("Player"))
-            _player = null;
-    }
-
-    #endregion
+	private void OnTriggerExit2D(Collider2D other)
+	{
+		// Clear the player reference
+		if (other.CompareTag("Player"))
+			_player = null;
+	}
+	#endregion
 }

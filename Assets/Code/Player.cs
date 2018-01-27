@@ -5,6 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(Agent))]
 public class Player : MonoBehaviour
 {
+	#region Inspector Fields
+	/// <summary>
+	/// The material for the image to download.
+	/// </summary>
+	[Tooltip("The material for the image to download.")]
+	[SerializeField]
+	private Material _downloadMaterial = null;
+	#endregion
+
 	#region Static Properties
 	/// <summary>
 	/// Reference to this player object.
@@ -13,11 +22,23 @@ public class Player : MonoBehaviour
 	#endregion
 
 	#region Properties
-
 	/// <summary>
 	/// The floor the player is currently on.
 	/// </summary>
+	[HideInInspector]
 	public int Floor = 0;
+
+	/// <summary>
+	/// Hideable object in range.
+	/// </summary>
+	[HideInInspector]
+	public HideableObject NearbyHideableObject;
+
+	/// <summary>
+	/// Player is hidden from the enemy.
+	/// </summary>
+	[HideInInspector]
+	public bool Hidden = false;
 	#endregion
 
 	#region Fields
@@ -25,6 +46,11 @@ public class Player : MonoBehaviour
 	/// Attached agent component.
 	/// </summary>
 	private Agent _agent;
+
+	/// <summary>
+	/// Attached player renderer.
+	/// </summary>
+	private Renderer _playerRenderer = null;
 
 	/// <summary>
 	/// Lists of the hotspots in range of this player.
@@ -44,6 +70,11 @@ public class Player : MonoBehaviour
 	/// Data that the player has already downloaded.
 	/// </summary>
 	private float _downloadedData;
+
+	/// <summary>
+	/// The amount of total data to download.
+	/// </summary>
+	private float _dataToDownload = 100f;
 	#endregion
 
 	#region Life Cycle
@@ -56,6 +87,7 @@ public class Player : MonoBehaviour
 
 		// Get the needed components.
 		_agent = GetComponent<Agent>();
+		_playerRenderer = GetComponentInChildren<Renderer>();
 	}
 
 	// Update is called once per frame
@@ -70,12 +102,15 @@ public class Player : MonoBehaviour
 		if (_connectedHotspot != null)
 		{
 			// Disconnect if the hotspot is drained.
-			if (_connectedHotspot.Drained)
+			if (_connectedHotspot.Drained || _connectedHotspot.ReturnSignalStrength(this) == 0)
 				_connectedHotspot = null;
 			else
 			{
 				// Get data from the connected hot spot.
 				_downloadedData += _connectedHotspot.ReturnData(this);
+
+				// Visually update the progress
+				UpdateProgress();
 			}
 		}
 	}
@@ -83,6 +118,12 @@ public class Player : MonoBehaviour
 	private void OnDisable()
 	{
 		Instance = null;
+	}
+
+	private void OnApplicationQuit()
+	{
+		// Reset the progress material
+		UpdateProgress(true);
 	}
 	#endregion
 
@@ -119,6 +160,10 @@ public class Player : MonoBehaviour
 				Debug.Log(string.Format("Disconnected from hotspot."));
 			}
 		}
+
+		// Hideable controls.
+		if (Input.GetButtonDown("Activate") && NearbyHideableObject != null)
+			Hide(!Hidden);
 	}
 	/// <summary>
 	/// Disable the players input or not.
@@ -127,6 +172,25 @@ public class Player : MonoBehaviour
 	public void Freeze(bool freeze = true)
 	{
 		_freeze = freeze;
+	}
+
+	/// <summary>
+	/// Visually update the progress of downloading the graphic.
+	/// </summary>
+	/// <param name="reset"></param>
+	private void UpdateProgress(bool reset = false)
+	{
+		float progress = (reset) ? 0f : _downloadedData / _dataToDownload;
+		_downloadMaterial.SetFloat("_Progress", progress);
+	}
+
+	public void Hide(bool hide)
+	{
+		// Update the state.
+		Hidden = hide;
+
+		// Make the player invisible.
+		_playerRenderer.enabled = !hide;
 	}
 	#endregion
 
