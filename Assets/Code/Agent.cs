@@ -11,7 +11,7 @@ public class Agent : MonoBehaviour
 	/// </summary>
 	[Tooltip("Speed of this agent.")]
 	[SerializeField]
-	private float _speed = 10f;
+	private float _speed = 5f;
 	#endregion
 
 	#region Properties
