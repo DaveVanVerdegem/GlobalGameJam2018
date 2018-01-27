@@ -66,11 +66,17 @@ public class Enemy : MonoBehaviour
 	{
 		// Check if player is in range.
 		if (Vector2.Distance(transform.position, Player.Instance.transform.position) > _detectionRange)
+		{
+			_playerDetected = false;
 			return;
+		}
 
 		// Check if enemy is facing the player.
 		if (_agent.FacingRight != (Player.Instance.transform.position.x > transform.position.x))
+		{
+			_playerDetected = false;
 			return;
+		}
 
 		Vector2 lookDirection = Player.Instance.transform.position - transform.position;
 		RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lookDirection, _detectionRange, _detectionMask);
