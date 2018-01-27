@@ -118,6 +118,13 @@ public class Enemy : MonoBehaviour
 	/// </summary>
 	private void DetectPlayer()
 	{
+		// Check if player is hidden.
+		if (Player.Instance.Hidden)
+		{
+			_state = State.Idling;
+			return;
+		}
+
 		// Check if player is in range.
 		if (Vector2.Distance(transform.position, Player.Instance.transform.position) > _detectionRange)
 		{
