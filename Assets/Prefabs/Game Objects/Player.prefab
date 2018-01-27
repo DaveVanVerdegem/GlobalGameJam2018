@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 20821181848775304}
   - component: {fileID: 124752856406176648}
   - component: {fileID: 81829319080437938}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114668189654151886}
   - component: {fileID: 50634113266360312}
   - component: {fileID: 61582183855540490}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -57,7 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4614769367041266}
   - component: {fileID: 212219537873717988}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dude
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  FacingRight: 1
 --- !u!124 &124752856406176648
 Behaviour:
   m_ObjectHideFlags: 1

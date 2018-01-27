@@ -14,6 +14,14 @@ public class Agent : MonoBehaviour
 	private float _speed = 10f;
 	#endregion
 
+	#region Properties
+	/// <summary>
+	/// The agent is facing to the right.
+	/// </summary>
+	[HideInInspector]
+	public bool FacingRight = true;
+	#endregion
+
 	#region Fields
 	/// <summary>
 	/// The sprite renderer of the player
@@ -45,7 +53,8 @@ public class Agent : MonoBehaviour
 		transform.Translate(Vector2.right * direction * _speed);
 
 		// Have the agent face the direction it's moving in.
-		_spriteRenderer.flipX = (Input.GetAxis("Horizontal") <= 0);
+		FacingRight = (direction > 0);
+		_spriteRenderer.flipX = !FacingRight;
 	}
 	#endregion
 }
