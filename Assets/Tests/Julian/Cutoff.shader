@@ -61,7 +61,7 @@
 			fixed4 trans = tex2D(_TransitionTex, i.uv);
 
 		// Don't display the part if it has not been downloaded already
-		if (trans.b >= _Progress)
+		if (trans.b > _Progress)
 		{
 			if (_UseBlurTex)
 			{
