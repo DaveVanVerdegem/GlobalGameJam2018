@@ -4,56 +4,38 @@ using UnityEngine;
 
 public class HideableObject : MonoBehaviour
 {
-    #region Fields
+	#region Fields
 
-    /// <summary>
-    /// Contains a reference to the player renderer ONLY IF the player is in the interactable area.
-    /// </summary>
-    private Renderer _playerRenderer = null;
+	#endregion
 
-    #endregion
+	#region Life Cycle
+	// Update is called once per frame
+	private void Update()
+	{
+	}
 
-    #region Life Cycle
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		// Update the player reference
+		if (other.CompareTag("Player"))
+			Player.Instance.NearbyHideableObject = this;
+	}
 
-    // Update is called once per frame
-    private void Update()
-    {
-        // Ignore input if player is not present in the interactable area
-        if (_playerRenderer == null)
-            return;
+	private void OnTriggerExit2D(Collider2D other)
+	{
+		// Ignore everything but the player
+		if (!other.CompareTag("Player"))
+			return;
 
-        // Toggle the renderer if the activate key is pressed
-        if (Input.GetButtonDown("Activate"))
-            ToggleHide();
-    }
+		// Make sure the player is not hidden anymore
+		Player.Instance.Hide(false);
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // Update the player reference
-        if (other.CompareTag("Player"))
-            _playerRenderer = other.GetComponentInChildren<Renderer>();
-    }
+		// Clear the reference
+		Player.Instance.NearbyHideableObject = null;
+	}
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        // Ignore everything but the player
-        if (!other.CompareTag("Player"))
-            return;
+	#endregion
 
-        // Make sure the player is not hidden anymore
-        _playerRenderer.enabled = true;
-
-        // Clear the reference
-        _playerRenderer = null;
-    }
-
-    #endregion
-
-    #region Methods
-
-    private void ToggleHide()
-    {
-        _playerRenderer.enabled = !_playerRenderer.enabled;
-    }
-    #endregion
+	#region Methods
+	#endregion
 }
