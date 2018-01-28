@@ -107,7 +107,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1530437243808294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 6, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4179688960343392}
@@ -369,9 +369,16 @@ MonoBehaviour:
   _dataToDownload: 100
   _roundingMargin: 1
   _downloadPercentage: {fileID: 0}
-  Floor: 0
+  _wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  _dashDistance: 3
+  _dashSpeed: 10
+  _dashImage: {fileID: 0}
+  Floor: 4
   NearbyHideableObject: {fileID: 0}
   Hidden: 0
+  Dashing: 0
 --- !u!114 &114602266165114940
 MonoBehaviour:
   m_ObjectHideFlags: 1
