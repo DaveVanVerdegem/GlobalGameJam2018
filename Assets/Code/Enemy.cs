@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 public class Enemy : MonoBehaviour
 {
@@ -30,6 +31,13 @@ public class Enemy : MonoBehaviour
     [Tooltip("Layer mask that enemy can detect player on.")]
     [SerializeField]
     private LayerMask _detectionMask;
+
+    /// <summary>
+    /// Layer mask that enemy can NOT detect player on.
+    /// </summary>
+    [Tooltip("Layer mask that enemy can detect player on.")]
+    [SerializeField]
+    private LayerMask _playerLessDetectionMask;
 
     /// <summary>
     /// Range at which enemy catches the player.
@@ -166,6 +174,10 @@ public class Enemy : MonoBehaviour
         Vector2 lookDirection = Player.Instance.transform.position - transform.position;
         RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lookDirection, _detectionRange, _detectionMask);
 
+        // If the raycast hits nothing, exit the method
+        if (raycastHit.transform == null)
+            return;
+
         // Update player detection.
         if (raycastHit.transform.CompareTag("Enemy"))
         {
@@ -217,7 +229,24 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Idle()
     {
-        // Get new idle target.
+        // If the player is hidden, remove him from the mask
+        LayerMask maskToUse = (Player.Instance.Hidden) ? _playerLessDetectionMask : _detectionMask;
+
+        // Check if the current idle target is still reachable
+        // Check how much to the left the enemy can move.
+        bool moveRight = _idleTarget.x > transform.position.x;
+
+        Vector2 rayDirection = (moveRight) ? Vector2.right : Vector2.left;
+        Debug.DrawRay(transform.position, rayDirection, Color.white);
+        RaycastHit2D reachableRaycastHit = Physics2D.Raycast(transform.position, rayDirection, 100, maskToUse);
+
+        print(string.Format("Hit: {0}", reachableRaycastHit.transform.gameObject.name));
+
+        // If the target is no longer reachable, reset it
+        if (reachableRaycastHit.distance < Vector2.Distance(transform.position, _idleTarget))
+            _idleTarget = Vector2.zero;
+
+        // Check if a new idle target needs to be assigned
         if (_idleTarget == Vector2.zero || Vector2.Distance(transform.position, _idleTarget) < _range)
         {
             if (_idleTimer >= _waitingTime)
@@ -234,11 +263,11 @@ public class Enemy : MonoBehaviour
             }
 
             // Check how much to the left the enemy can move.
-            RaycastHit2D raycastInfo = Physics2D.Raycast(transform.position, Vector2.left, 100, _detectionMask);
+            RaycastHit2D raycastInfo = Physics2D.Raycast(transform.position, Vector2.left, 100, maskToUse);
             Vector2 leftLimit = raycastInfo.transform.position + Vector3.right;
 
             // Check how much to the right the enemy can move.
-            raycastInfo = Physics2D.Raycast(transform.position, Vector2.right, 100, _detectionMask);
+            raycastInfo = Physics2D.Raycast(transform.position, Vector2.right, 100, maskToUse);
             Vector2 rightLimit = raycastInfo.transform.position + Vector3.left;
             float randomFloat = Random.Range(0f, 1f);
 
@@ -247,7 +276,7 @@ public class Enemy : MonoBehaviour
         }
 
         // Move to idle target.
-        bool moveRight = _idleTarget.x > transform.position.x;
+
         if (moveRight)
         {
             _agent.Move(.25f * Time.deltaTime);
