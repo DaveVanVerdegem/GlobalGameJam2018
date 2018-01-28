@@ -68,13 +68,25 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Image _dashImage = null;
 
+    /// <summary>
+    /// Override dash cooldown for debugging purposes.
+    /// </summary>
+    [SerializeField]
+    private bool _noDashCooldown = false;
+
     #endregion
 
     #region Static Properties
     /// <summary>
     /// Reference to this player object.
     /// </summary>
-    public static Player Instance;
+    private static Player _instance;
+
+    public static Player Instance
+    {
+        get { return _instance ?? (_instance = FindObjectOfType<Player>()); }
+        set { _instance = value; }
+    }
     #endregion
 
     #region Properties
@@ -150,18 +162,20 @@ public class Player : MonoBehaviour
     /// </summary>
     private object _lastInteractableSender = null;
 
+    /// <summary>
+    /// Dashtrail object
+    /// </summary>
+    private DashTrail _dashTrail = null;
+
     #endregion
 
     #region Life Cycle
     // Use this for initialization
     private void Awake()
     {
-        // Set the instance.
-        if (Instance == null)
-            Instance = this;
-
         // Get the needed components.
         _agent = GetComponent<Agent>();
+        _dashTrail = GetComponentInChildren<DashTrail>();
         _playerRenderer = GetComponentInChildren<Renderer>();
         _skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
@@ -247,7 +261,8 @@ public class Player : MonoBehaviour
         Vector2 lookDirection = (_agent.FacingRight) ? Vector2.right : Vector2.left;
         Debug.DrawRay(transform.position, lookDirection * (_dashDistance + bleed), Color.cyan);
 
-        if (_dashAvailable && Input.GetKeyDown(KeyCode.L))
+        // Press X button on xbox or Q on pc
+        if (_dashAvailable && Input.GetButtonDown("Fire3"))
         {
             // Do a raycast to check if dashing is allowed
             RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lookDirection, _dashDistance + bleed, _dashObstaclesLayerMask);
@@ -259,6 +274,7 @@ public class Player : MonoBehaviour
                 return;
             }
 
+            // Dash!
             StartCoroutine(Dash());
             return;
         }
@@ -287,7 +303,6 @@ public class Player : MonoBehaviour
         }
 
         // Hideable controls.
-        print(string.Format("NearbyHideableObject is {0}", NearbyHideableObject != null));
         if (Input.GetButtonDown("Activate") && NearbyHideableObject != null)
         {
             Hide(!Hidden);
@@ -299,6 +314,12 @@ public class Player : MonoBehaviour
     {
         // Set the dash flag
         Dashing = true;
+
+        // Disable dashing until cooldown is done.
+        _dashAvailable = false;
+
+        // Enable the dashtrail
+        _dashTrail.Activate(_agent);
 
         // Slow motion
         Time.timeScale = 0.3f;
@@ -327,14 +348,18 @@ public class Player : MonoBehaviour
         // Reset the dash flag
         Dashing = false;
 
+        // Deactivate the dash trail
+        _dashTrail.Deactivate();
+
         // Let the ability cool down
         yield return StartCoroutine(DashCooldown());
     }
 
     private IEnumerator DashCooldown(float coolDownTime = 10f)
     {
-        // Disable dashing until cooldown is done.
-        _dashAvailable = false;
+        // Check for developer override
+        if (_noDashCooldown)
+            coolDownTime = 1f;
 
         // Cool down
         float originalCooldownTime = coolDownTime;

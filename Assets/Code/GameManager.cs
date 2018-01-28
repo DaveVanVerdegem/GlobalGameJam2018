@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -131,13 +132,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RestartLevel()
     {
-        // Unpause the game.
-        Time.timeScale = 1;
-
         Debug.Log("Restarted level.");
+
+        // Stop all active coroutines
+        StopAllCoroutines();
 
         // Reload the active scene.
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        // Unpause the game.
+        Time.timeScale = 1;
+
+        // Reset static variables manually because these do not reset on scene load
+        AudioPlayer.Instance.Reset();
     }
 
     /// <summary>

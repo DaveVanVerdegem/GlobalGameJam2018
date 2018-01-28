@@ -132,5 +132,13 @@ public class AudioPlayer : MonoBehaviour
             MusicSource.Play();
         }
     }
+
+    /// <summary>
+    /// Not resetting causes problems on game over and scene reload
+    /// </summary>
+    public void Reset()
+    {
+        _chasingEnemies.Clear();
+    }
     #endregion
 }
