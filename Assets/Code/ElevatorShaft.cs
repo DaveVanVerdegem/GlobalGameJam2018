@@ -15,6 +15,13 @@ public class ElevatorShaft : MonoBehaviour
     [SerializeField]
     private List<Collider2D> _floorElevatorColliders = null;
 
+    /// <summary>
+    /// Can the elevator be called from both sides?
+    /// </summary>
+    [Tooltip("Can the elevator be called from both sides?")]
+    [SerializeField]
+    private bool _doubleSided = false;
+
     #endregion
 
     #region Fields
@@ -86,6 +93,9 @@ public class ElevatorShaft : MonoBehaviour
 
     private IEnumerator CallElevator()
     {
+        // Play arrival sound on calling so the player is notified that the elevator was called
+        _elevator.PlayArrivalSound();
+
         // The difference between the floor the elevator is called from and the elevators current floor
         int floorDifference = _elevator.Floor - _player.Floor;
         for (int i = 0; i < Mathf.Abs(floorDifference); ++i)
@@ -117,8 +127,19 @@ public class ElevatorShaft : MonoBehaviour
     public void UpdateDoorColliders()
     {
         // Use the bottom floor as offset
+        // Disable the colliders where the elevator is
+        int offsettedFloor = _elevator.Floor - _elevator.BottomFloor;
         for (int i = 0; i < _floorElevatorColliders.Count; ++i)
-            _floorElevatorColliders[i].enabled = (i != _elevator.Floor - _elevator.BottomFloor);
+        {
+            if (_doubleSided)
+            {
+                _floorElevatorColliders[i].enabled = ((i % (_floorElevatorColliders.Count / 2)) != offsettedFloor);
+            }
+            else
+            {
+                _floorElevatorColliders[i].enabled = (i != offsettedFloor);
+            }
+        }
     }
     #endregion
 }

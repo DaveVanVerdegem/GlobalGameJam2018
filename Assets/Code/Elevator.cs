@@ -164,7 +164,7 @@ public class Elevator : MonoBehaviour
         {
             // Unmute the background music
             AudioPlayer.MusicSource.mute = false;
-            AudioPlayer.EffectsSource.PlayOneShot(_arrivalSound);
+            PlayArrivalSound();
         }
 
         // Update the doors
@@ -182,6 +182,11 @@ public class Elevator : MonoBehaviour
             // Increment the player floor
             _player.Floor = (up) ? _player.Floor + 1 : _player.Floor - 1;
         }
+    }
+
+    public void PlayArrivalSound()
+    {
+        AudioPlayer.EffectsSource.PlayOneShot(_arrivalSound);
     }
 
     #endregion
