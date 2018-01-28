@@ -156,6 +156,10 @@ public class Player : MonoBehaviour
 	/// </summary>
 	private DashTrail _dashTrail = null;
 
+	/// <summary>
+	/// Inputs for the player are disabled.
+	/// </summary>
+	private bool _inputsDisabled;
 	#endregion
 
 	#region Life Cycle
@@ -239,6 +243,9 @@ public class Player : MonoBehaviour
 	#region Methods
 	private void Inputs()
 	{
+		if (_inputsDisabled)
+			return;
+
 		// Enable whistling if the player is not yet whistling
 		if (!Whistling && Input.GetButton("Whistle"))
 			StartCoroutine(Whistle());
@@ -459,6 +466,10 @@ public class Player : MonoBehaviour
 		_agent.SetAnimation(animationName);
 	}
 
+	public void DisableInputs(bool inputsDisabled)
+	{
+		_inputsDisabled = inputsDisabled;
+	}
 	#endregion
 
 	#region Returns

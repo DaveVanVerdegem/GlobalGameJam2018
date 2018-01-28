@@ -95,10 +95,16 @@ public class GameManager : MonoBehaviour
 		// Pause the game.
 		Time.timeScale = 0;
 
+		// Disable sound.
+		AudioPlayer.MusicSource.Stop();
+
 		Debug.Log("Game over triggered.");
 
 		// Show the game over panel.
 		_gameOverPanel.SetActive(true);
+
+		// Disable inputs.
+		Player.Instance.DisableInputs(true);
 	}
 
 	/// <summary>
@@ -124,6 +130,9 @@ public class GameManager : MonoBehaviour
 		// Play win sound.
 		AudioPlayer.MusicSource.Stop();
 		AudioPlayer.EffectsSource.PlayOneShot(_winCry);
+
+		// Disable inputs.
+		Player.Instance.DisableInputs(true);
 	}
 
 	/// <summary>
@@ -157,6 +166,9 @@ public class GameManager : MonoBehaviour
 
 		// Set display of pause menu.
 		_pauseMenu.SetActive(paused);
+
+		// Disable inputs.
+		Player.Instance.DisableInputs(paused);
 	}
 
 	/// <summary>
