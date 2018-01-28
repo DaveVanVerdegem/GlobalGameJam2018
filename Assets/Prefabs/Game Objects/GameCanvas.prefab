@@ -191,13 +191,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224518189803922420}
+  - component: {fileID: 114209886330412018}
   m_Layer: 5
   m_Name: GameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1467468748732182
 GameObject:
   m_ObjectHideFlags: 1
@@ -417,7 +418,7 @@ GameObject:
   - component: {fileID: 222489127120857226}
   - component: {fileID: 114011946879459346}
   m_Layer: 5
-  m_Name: Text
+  m_Name: GameOverTet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -459,15 +460,15 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8a7a82f6332ec1a479fc251445460ce9, type: 3}
-    m_FontSize: 56
+    m_FontSize: 199
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 65
+    m_MaxSize: 199
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Game over!
@@ -643,6 +644,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Restart
+--- !u!114 &114209886330412018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1433514148946478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171f3309a24912d42ace26365fb71720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114213286836763992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1804,16 +1816,16 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1901783862541420}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.29368475, y: 0.29368487, z: 0.29368487}
   m_Children: []
   m_Father: {fileID: 224518189803922420}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000015258789}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224731768430389716
