@@ -144,7 +144,7 @@ public class DashTrail : MonoBehaviour
         // Make the ghost transform from the player transform and look in the right direction
         ghost.transform.position = transform.position + _spriteOffset;
         ghost.transform.rotation = transform.rotation;
-        ghost.GetComponent<SpriteRenderer>().flipX = !_playerAgent.FacingRight;
+        ghost.GetComponent<SpriteRenderer>().flipX = _playerAgent.FacingRight;
 
         // Disable the ghost after the displaytime has passed
         yield return new WaitForSeconds(_displayTime);
