@@ -35,6 +35,13 @@ public class GameManager : MonoBehaviour
 	[Tooltip("Audioclip to play with win screen.")]
 	[SerializeField]
 	private AudioClip _winCry;
+
+	/// <summary>
+	/// Audioclip to play with start of game.
+	/// </summary>
+	[Tooltip("Audioclip to play with start of game.")]
+	[SerializeField]
+	private AudioClip _introSound;
 	#endregion
 
 	#region Properties
@@ -67,6 +74,9 @@ public class GameManager : MonoBehaviour
 	{
 		// Play the background music.
 		AudioPlayer.Instance.PlayMusic();
+
+		// Play the intro sound for the game.
+		AudioPlayer.EffectsSource.PlayOneShot(_introSound);
 	}
 
 	// Update is called once per frame
