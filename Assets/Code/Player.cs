@@ -35,6 +35,13 @@ public class Player : MonoBehaviour
     [Tooltip("Because of rounding errors a hotspot will never give its total amount of data. Use this margin to prevent data not filling up.")]
     [SerializeField]
     private float _roundingMargin = 1f;
+
+    /// <summary>
+    /// The percentage of how much of the total to download has been downloaded.
+    /// </summary>
+    [SerializeField]
+    private Text _downloadPercentage = null;
+
     #endregion
 
     #region Static Properties
@@ -184,6 +191,9 @@ public class Player : MonoBehaviour
         if (_freeze)
             return;
 
+        if (Input.GetKeyDown(KeyCode.L))
+            Dash();
+
         // Movement controls.
         _agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
 
@@ -211,6 +221,13 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Activate") && NearbyHideableObject != null)
             Hide(!Hidden);
     }
+
+    private void Dash()
+    {
+        float dashForce = 25f;
+        _agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime * dashForce);
+    }
+
     /// <summary>
     /// Disable the players input or not.
     /// </summary>
@@ -228,6 +245,7 @@ public class Player : MonoBehaviour
     {
         float progress = (reset) ? 0f : (_downloadedData / _dataToDownload);
         _downloadMaterial.SetFloat("_Progress", progress);
+        _downloadPercentage.text = string.Format("Downloading: {0}%", (int)(progress * 100));
     }
 
     /// <summary>
