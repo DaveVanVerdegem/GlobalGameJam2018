@@ -57,16 +57,23 @@ public class Agent : MonoBehaviour
 
         // For the player, only switch sides after a certain threshold is reached
         // otherwise, releasing the joystick is enough to swap around
-        float tolerance = (IsPlayerAgent) ? 0.01f : 0f;
+        // if arrowkeys are pressed instead, ignore the threshold
+        bool arrowKeysPressed = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow);
+        float tolerance = (IsPlayerAgent && !arrowKeysPressed) ? 0.01f : 0f;
         if (Mathf.Abs(direction) > tolerance)
         {
             // Have the agent face the direction it's moving in.
             FacingRight = (direction > tolerance);
-            _skeletonAnimation.transform.localScale = (FacingRight) ? Vector3.one : new Vector3(-1f, 1, 1);
+            UpdateViewingDirection();
         }
 
         // Set the right animation.
         SetAnimation((Mathf.Abs(direction) > 0) ? "walk" : "idle");
+    }
+
+    public void UpdateViewingDirection()
+    {
+        _skeletonAnimation.transform.localScale = (FacingRight) ? Vector3.one : new Vector3(-1f, 1, 1);
     }
 
     public void SetAnimation(string animationName)

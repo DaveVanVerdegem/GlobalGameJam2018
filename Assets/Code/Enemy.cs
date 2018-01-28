@@ -131,6 +131,14 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void DetectPlayer()
     {
+        // Check if the player is whistling
+        if (Player.Instance.Whistling)
+        {
+            // If the player whistles, face the player
+            _agent.FacingRight = (Player.Instance.transform.position.x > transform.position.x);
+            _agent.UpdateViewingDirection();
+        }
+
         // Check if player is hidden.
         if (Player.Instance.Hidden)
         {
@@ -147,7 +155,7 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        // Check if enemy is facing the player.
+        // Check if enemy is facing the player
         if (_agent.FacingRight != (Player.Instance.transform.position.x > transform.position.x))
         {
             AudioPlayer.Instance.RemoveChasingEnemy(this);
@@ -232,7 +240,6 @@ public class Enemy : MonoBehaviour
             // Check how much to the right the enemy can move.
             raycastInfo = Physics2D.Raycast(transform.position, Vector2.right, 100, _detectionMask);
             Vector2 rightLimit = raycastInfo.transform.position + Vector3.left;
-
             float randomFloat = Random.Range(0f, 1f);
 
             // Get new idle target.
@@ -240,10 +247,15 @@ public class Enemy : MonoBehaviour
         }
 
         // Move to idle target.
-        if (_idleTarget.x > transform.position.x)
+        bool moveRight = _idleTarget.x > transform.position.x;
+        if (moveRight)
+        {
             _agent.Move(.25f * Time.deltaTime);
+        }
         else
+        {
             _agent.Move(-.25f * Time.deltaTime);
+        }
     }
     #endregion
 }

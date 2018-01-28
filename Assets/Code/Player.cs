@@ -74,6 +74,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool _noDashCooldown = false;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private AudioClip _whistleSound = null;
+
     #endregion
 
     #region Static Properties
@@ -113,6 +117,9 @@ public class Player : MonoBehaviour
     /// </summary>
     [HideInInspector]
     public bool Dashing = false;
+
+    [HideInInspector]
+    public bool Whistling = false;
     #endregion
 
     #region Fields
@@ -245,6 +252,10 @@ public class Player : MonoBehaviour
     #region Methods
     private void Inputs()
     {
+        // Enable whistling if the player is not yet whistling
+        if (!Whistling && Input.GetButton("Whistle"))
+            StartCoroutine(Whistle());
+
         // Movement controls.
         // Disable inputs when the player is frozen
         if (_freeze)
@@ -286,7 +297,8 @@ public class Player : MonoBehaviour
             if (_connectedHotspot == null)
             {
                 _connectedHotspot = ReturnBestAvailableHotspot();
-                print(string.Format("Connected to network {0}!", _connectedHotspot.gameObject.name));
+                if (_connectedHotspot != null)
+                    print(string.Format("Connected to network {0}!", _connectedHotspot.gameObject.name));
             }
             // Disconnect from hotspot.
             else
@@ -302,6 +314,21 @@ public class Player : MonoBehaviour
             Hide(!Hidden);
             NearbyHideableObject.ToggleState(!Hidden);
         }
+    }
+
+    private IEnumerator Whistle()
+    {
+        // Set boolean
+        Whistling = true;
+
+        // Play sound
+        AudioPlayer.EffectsSource.PlayOneShot(_whistleSound);
+
+        // Wait for the sound to finish
+        yield return new WaitForSeconds(_whistleSound.length);
+
+        // Set boolean
+        Whistling = false;
     }
 
     private IEnumerator Dash()
