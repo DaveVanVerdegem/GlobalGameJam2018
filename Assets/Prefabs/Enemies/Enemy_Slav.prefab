@@ -98,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1202497157061918}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.115667, y: 10.130132, z: 0.03953427}
+  m_LocalPosition: {x: -1.8362787, y: -3.97, z: 0.019767135}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4097552760099474}
@@ -139,7 +139,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
 --- !u!33 &33802211930958938
 MeshFilter:
   m_ObjectHideFlags: 1

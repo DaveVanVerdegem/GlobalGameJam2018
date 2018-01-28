@@ -270,6 +270,7 @@ public class Player : MonoBehaviour
             // If the raycast hit something, don't allow dashing
             if (raycastHit.transform != null)
             {
+                AudioPlayer.EffectsSource.PlayOneShot(_dashTrail.DeniedSound);
                 Debug.LogWarning(string.Format("Can't dash, raycast hit {0}", raycastHit.transform.gameObject.name));
                 return;
             }
@@ -320,6 +321,9 @@ public class Player : MonoBehaviour
 
         // Enable the dashtrail
         _dashTrail.Activate(_agent);
+
+        // Play the dashing sound
+        AudioPlayer.EffectsSource.PlayOneShot(_dashTrail.DashSound);
 
         // Slow motion
         Time.timeScale = 0.3f;

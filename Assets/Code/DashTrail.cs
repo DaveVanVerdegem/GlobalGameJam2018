@@ -36,6 +36,7 @@ public class DashTrail : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject _ghostPrefab = null;
+
     #endregion
 
     #region Fields
@@ -56,6 +57,18 @@ public class DashTrail : MonoBehaviour
     /// A reference to the player's agent
     /// </summary>
     private Agent _playerAgent = null;
+    #endregion
+
+    #region Properties
+    /// <summary>
+    /// Sound to play when dashing.
+    /// </summary>
+    public AudioClip DashSound = null;
+
+    /// <summary>
+    /// Sound to play when dashing is denied.
+    /// </summary>
+    public AudioClip DeniedSound = null;
     #endregion
 
     #region Life Cycle
