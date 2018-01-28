@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     [Header("Dashing")]
     [Tooltip("Layer mask that detects objects in dash range that make dash unavailable.")]
     [SerializeField]
-    private LayerMask _wallLayerMask;
+    private LayerMask _dashObstaclesLayerMask;
 
     /// <summary>
     /// Dash distance.
@@ -142,6 +142,13 @@ public class Player : MonoBehaviour
     /// Dash is unavailable during cooldown.
     /// </summary>
     private bool _dashAvailable = true;
+
+    /// <summary>
+    /// A reference to keep track of the last object that ordered to show the interactable icon.
+    /// This is to make sure that no object that has not sent the last order to show, can hide it.
+    /// This would happen e.g. when 2 hideable objects are close.
+    /// </summary>
+    private object _lastInteractableSender = null;
 
     #endregion
 
@@ -243,7 +250,7 @@ public class Player : MonoBehaviour
         if (_dashAvailable && Input.GetKeyDown(KeyCode.L))
         {
             // Do a raycast to check if dashing is allowed
-            RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lookDirection, _dashDistance + bleed, _wallLayerMask);
+            RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lookDirection, _dashDistance + bleed, _dashObstaclesLayerMask);
 
             // If the raycast hit something, don't allow dashing
             if (raycastHit.transform != null)
@@ -280,6 +287,7 @@ public class Player : MonoBehaviour
         }
 
         // Hideable controls.
+        print(string.Format("NearbyHideableObject is {0}", NearbyHideableObject != null));
         if (Input.GetButtonDown("Activate") && NearbyHideableObject != null)
         {
             Hide(!Hidden);
@@ -304,6 +312,9 @@ public class Player : MonoBehaviour
         {
             // Increment progress
             progress += Time.deltaTime * _dashSpeed * (1 - progress + 0.1f);
+
+            // Decrement cooldown image (just for visuals)
+            _dashImage.fillAmount = 1 - progress;
 
             // Move
             _agent.transform.position = (Vector2.Lerp(startPosition, targetPosition, progress));
@@ -394,8 +405,16 @@ public class Player : MonoBehaviour
     /// Show the interactable icon.
     /// </summary>
     /// <param name="show">Show/hide the icon.</param>
-    public void ShowInteractableIcon(bool show = true)
+    public void ShowInteractableIcon(object sender, bool show)
     {
+        // If this is a hide request, check if it is valid
+        if (!show && sender != _lastInteractableSender)
+            return;
+
+        // Remember the last sender who requested
+        _lastInteractableSender = sender;
+
+        // Toggle the icon
         _interactableIcon.enabled = show;
     }
 

@@ -59,7 +59,7 @@ public class Door : MonoBehaviour
         _isOpen = !_isOpen;
 
         // If the player opened the door, remove the interactable icon
-        _player.ShowInteractableIcon(false);
+        _player.ShowInteractableIcon(this, false);
 
         // Toggle the collider and sprite renderer
         _doorClosed.SetActive(!_isOpen);
@@ -72,7 +72,7 @@ public class Door : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _player = other.GetComponent<Player>();
-            _player.ShowInteractableIcon();
+            _player.ShowInteractableIcon(this, false);
         }
     }
 
@@ -82,7 +82,7 @@ public class Door : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Hide the interactable icon
-            _player.ShowInteractableIcon(false);
+            _player.ShowInteractableIcon(this, false);
 
             // Clear the player reference
             _player = null;

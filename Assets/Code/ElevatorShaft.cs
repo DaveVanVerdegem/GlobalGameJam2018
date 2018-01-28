@@ -64,7 +64,7 @@ public class ElevatorShaft : MonoBehaviour
 
         // Display the information if the elevator is not at the current floor
         if (_elevator.Floor != _player.Floor)
-            _player.ShowInteractableIcon();
+            _player.ShowInteractableIcon(this, true);
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -74,7 +74,7 @@ public class ElevatorShaft : MonoBehaviour
             return;
 
         // Hide the information
-        _player.ShowInteractableIcon(false);
+        _player.ShowInteractableIcon(this, false);
 
         // Reset the player reference
         _player = null;
@@ -105,7 +105,7 @@ public class ElevatorShaft : MonoBehaviour
         }
 
         // Hide the information
-        Player.Instance.ShowInteractableIcon(false);
+        Player.Instance.ShowInteractableIcon(this, false);
 
         // Reset the boolean so the elevator can be called again if it is not on a floor
         _isCalled = false;

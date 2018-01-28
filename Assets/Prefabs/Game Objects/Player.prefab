@@ -369,9 +369,9 @@ MonoBehaviour:
   _dataToDownload: 100
   _roundingMargin: 1
   _downloadPercentage: {fileID: 0}
-  _wallLayerMask:
+  _dashObstaclesLayerMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 6144
   _dashDistance: 3
   _dashSpeed: 10
   _dashImage: {fileID: 0}
