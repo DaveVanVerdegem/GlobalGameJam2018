@@ -36,11 +36,11 @@ public class Player : MonoBehaviour
 	[SerializeField]
 	private float _roundingMargin = 1f;
 
-    /// <summary>
-    /// The percentage of how much of the total to download has been downloaded.
-    /// </summary>
-    [SerializeField]
-    private Text _downloadPercentage = null;
+	/// <summary>
+	/// The percentage of how much of the total to download has been downloaded.
+	/// </summary>
+	[SerializeField]
+	private Text _downloadPercentage = null;
 
 	#endregion
 
@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
 	/// <summary>
 	/// The floor the player is currently on.
 	/// </summary>
+	[HideInInspector]
 	public int Floor = 0;
 
 	/// <summary>
@@ -118,6 +119,9 @@ public class Player : MonoBehaviour
 		_agent = GetComponent<Agent>();
 		_playerRenderer = GetComponentInChildren<Renderer>();
 		_skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+
+		// Set floor.
+		Floor = Level.Instance.ReturnFloorLevel(transform.position);
 	}
 
 	// Update is called once per frame
@@ -248,7 +252,7 @@ public class Player : MonoBehaviour
 	{
 		float progress = (reset) ? 0f : (_downloadedData / _dataToDownload);
 		_downloadMaterial.SetFloat("_Progress", progress);
-        _downloadPercentage.text = string.Format("Downloading: {0}%", (int)(progress * 100));
+		_downloadPercentage.text = string.Format("Downloading: {0}%", (int)(progress * 100));
 	}
 
 	/// <summary>
