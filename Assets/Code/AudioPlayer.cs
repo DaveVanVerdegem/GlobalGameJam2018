@@ -30,6 +30,13 @@ public class AudioPlayer : MonoBehaviour
 	private AudioClip _chaseMusic;
 	#endregion
 
+	#region Fields
+	/// <summary>
+	/// List of enemies that are currently chasing the player.
+	/// </summary>
+	private List<Enemy> _chasingEnemies = new List<Enemy>();
+	#endregion
+
 	#region Properties
 	/// <summary>
 	/// The audio source from which background music will be played.
@@ -65,12 +72,61 @@ public class AudioPlayer : MonoBehaviour
 	/// <param name="chaseMusic">Play the chase music, else play the regular music.</param>
 	public void PlayMusic(bool chaseMusic = false)
 	{
-		if (chaseMusic)
+		if (chaseMusic && MusicSource.clip != _chaseMusic)
 		{
 			MusicSource.clip = _chaseMusic;
 			MusicSource.Play();
 		}
-		else
+		else if (!chaseMusic && MusicSource.clip != _backgroundMusic)
+		{
+			MusicSource.clip = _backgroundMusic;
+			MusicSource.Play();
+		}
+	}
+
+	/// <summary>
+	/// Track an extra enemy to update the background music.
+	/// </summary>
+	/// <param name="enemy">Enemy to track.</param>
+	public void AddChasingEnemy(Enemy enemy)
+	{
+		if (_chasingEnemies.Contains(enemy))
+			return;
+
+		// Add enemy to the list.
+		_chasingEnemies.Add(enemy);
+
+		// Update the music.
+		UpdateMusic();
+	}
+
+	/// <summary>
+	/// Remove an enemy to update the background music.
+	/// </summary>
+	/// <param name="enemy">Enemy to remove.</param>
+	public void RemoveChasingEnemy(Enemy enemy)
+	{
+		if (!_chasingEnemies.Contains(enemy))
+			return;
+
+		// Remove enemy from the list.
+		_chasingEnemies.Remove(enemy);
+
+		// Update the music.
+		UpdateMusic();
+	}
+
+	/// <summary>
+	/// Check the chasing enemies and update to the right audioclip.
+	/// </summary>
+	private void UpdateMusic()
+	{
+		if (_chasingEnemies.Count > 0 && MusicSource.clip != _chaseMusic)
+		{
+			MusicSource.clip = _chaseMusic;
+			MusicSource.Play();
+		}
+		else if (_chasingEnemies.Count == 0 && MusicSource.clip != _backgroundMusic)
 		{
 			MusicSource.clip = _backgroundMusic;
 			MusicSource.Play();
