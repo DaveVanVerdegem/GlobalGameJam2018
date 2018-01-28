@@ -42,6 +42,32 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Text _downloadPercentage = null;
 
+    /// <summary>
+    /// Layer mask that detects objects in dash range that make dash unavailable
+    /// </summary>
+    [Header("Dashing")]
+    [Tooltip("Layer mask that detects objects in dash range that make dash unavailable.")]
+    [SerializeField]
+    private LayerMask _wallLayerMask;
+
+    /// <summary>
+    /// Dash distance.
+    /// </summary>
+    [SerializeField]
+    private float _dashDistance = 3f;
+
+    /// <summary>
+    /// Dash speed.
+    /// </summary>
+    [SerializeField]
+    private float _dashSpeed = 10f;
+
+    /// <summary>
+    /// The dash image on the UI that shows the player the cooldown time.
+    /// </summary>
+    [SerializeField]
+    private Image _dashImage = null;
+
     #endregion
 
     #region Static Properties
@@ -55,6 +81,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// The floor the player is currently on.
     /// </summary>
+    [HideInInspector]
     public int Floor = 0;
 
     /// <summary>
@@ -68,6 +95,12 @@ public class Player : MonoBehaviour
     /// </summary>
     [HideInInspector]
     public bool Hidden = false;
+
+    /// <summary>
+    /// Is the player currently dashing
+    /// </summary>
+    [HideInInspector]
+    public bool Dashing = false;
     #endregion
 
     #region Fields
@@ -104,6 +137,7 @@ public class Player : MonoBehaviour
     /// The skeletonanimation component.
     /// </summary>
     private SkeletonAnimation _skeletonAnimation = null;
+
     #endregion
 
     #region Life Cycle
@@ -191,8 +225,25 @@ public class Player : MonoBehaviour
         if (_freeze)
             return;
 
+        // Visualize dashing check
+        Vector2 lookDirection = (_agent.FacingRight) ? Vector2.right : Vector2.left;
+        Debug.DrawRay(transform.position, lookDirection * _dashDistance, Color.cyan);
+
         if (Input.GetKeyDown(KeyCode.L))
-            Dash();
+        {
+            // Do a raycast to check if dashing is allowed
+            RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lookDirection, _dashDistance, _wallLayerMask);
+
+            // If the raycast hit something, don't allow dashing
+            if (raycastHit.transform != null)
+            {
+                Debug.LogWarning(string.Format("Can't dash, raycast hit {0}", raycastHit.transform.gameObject.name));
+                return;
+            }
+
+            StartCoroutine(Dash());
+            return;
+        }
 
         // Movement controls.
         _agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime);
@@ -222,10 +273,35 @@ public class Player : MonoBehaviour
             Hide(!Hidden);
     }
 
-    private void Dash()
+    private IEnumerator Dash()
     {
-        float dashForce = 25f;
-        _agent.Move(Input.GetAxis("Horizontal") * Time.deltaTime * dashForce);
+        // Set the dash flag
+        Dashing = true;
+
+        // Slow motion
+        Time.timeScale = 0.3f;
+
+        float progress = 0f;
+
+        Vector2 startPosition = transform.position;
+        Vector2 targetPosition = startPosition + ((_agent.FacingRight) ? Vector2.right : Vector2.left) * _dashDistance;
+
+        while (progress < 1f)
+        {
+            // Increment progress
+            progress += Time.deltaTime * _dashSpeed * (1 - progress + 0.1f);
+
+            // Move
+            _agent.transform.position = (Vector2.Lerp(startPosition, targetPosition, progress));
+            yield return new WaitForEndOfFrame();
+        }
+
+        // Stop slow motion
+        Time.timeScale = 1f;
+
+        // Reset the dash flag
+        Dashing = false;
+        //_agent.Move(/*Input.GetAxis("Horizontal") * */Time.deltaTime * dashForce);
     }
 
     /// <summary>

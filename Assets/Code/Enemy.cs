@@ -131,7 +131,7 @@ public class Enemy : MonoBehaviour
         // Check if player is hidden.
         if (Player.Instance.Hidden)
         {
-			AudioPlayer.Instance.RemoveChasingEnemy(this);
+            AudioPlayer.Instance.RemoveChasingEnemy(this);
             _state = State.Idling;
             return;
         }
@@ -139,7 +139,7 @@ public class Enemy : MonoBehaviour
         // Check if player is in range.
         if (Vector2.Distance(transform.position, Player.Instance.transform.position) > _detectionRange)
         {
-			AudioPlayer.Instance.RemoveChasingEnemy(this);
+            AudioPlayer.Instance.RemoveChasingEnemy(this);
             _state = State.Idling;
             return;
         }
@@ -147,7 +147,7 @@ public class Enemy : MonoBehaviour
         // Check if enemy is facing the player.
         if (_agent.FacingRight != (Player.Instance.transform.position.x > transform.position.x))
         {
-			AudioPlayer.Instance.RemoveChasingEnemy(this);
+            AudioPlayer.Instance.RemoveChasingEnemy(this);
             _state = State.Idling;
             return;
         }
@@ -156,16 +156,16 @@ public class Enemy : MonoBehaviour
         RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lookDirection, _detectionRange, _detectionMask);
 
         // Update player detection.
-		if (raycastHit.transform == Player.Instance.transform)
-		{
-			AudioPlayer.Instance.AddChasingEnemy(this);
-			_state = State.Chasing;
-		}
-		else
-		{
-			AudioPlayer.Instance.RemoveChasingEnemy(this);
-			_state = State.Idling;
-		}
+        if (raycastHit.transform == Player.Instance.transform)
+        {
+            AudioPlayer.Instance.AddChasingEnemy(this);
+            _state = State.Chasing;
+        }
+        else
+        {
+            AudioPlayer.Instance.RemoveChasingEnemy(this);
+            _state = State.Idling;
+        }
     }
 
     /// <summary>
@@ -173,6 +173,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void FollowPlayer()
     {
+        // Ignore the player if he is dashing
+        if (Player.Instance.Dashing)
+            return;
+
         if (Player.Instance.transform.position.x > transform.position.x)
             _agent.Move(1 * Time.deltaTime);
         else
