@@ -56,7 +56,7 @@ public class Agent : MonoBehaviour
         if (Mathf.Abs(direction) > 0)
         {
             // Have the agent face the direction it's moving in.
-            FacingRight = (direction >= 0);
+            FacingRight = (direction > 0);
             _skeletonAnimation.transform.localScale = (FacingRight) ? Vector3.one : new Vector3(-1f, 1, 1);
         }
 

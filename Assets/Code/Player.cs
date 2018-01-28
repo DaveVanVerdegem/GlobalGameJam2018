@@ -290,16 +290,11 @@ public class Player : MonoBehaviour
             if (_connectedHotspot == null)
             {
                 _connectedHotspot = ReturnBestAvailableHotspot();
-
-                if (_connectedHotspot != null)
-                    Debug.Log(string.Format("Connected to hot spot."));
             }
             // Disconnect from hotspot.
             else
             {
                 _connectedHotspot = null;
-
-                Debug.Log(string.Format("Disconnected from hotspot."));
             }
         }
 
