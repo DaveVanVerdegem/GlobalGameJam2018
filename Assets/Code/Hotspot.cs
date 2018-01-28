@@ -62,6 +62,18 @@ public class Hotspot : MonoBehaviour
     private Color _maximumBandwidthColor = Color.green;
 
     /// <summary>
+    /// The color when no data is remaining in the router.
+    /// </summary>
+    [SerializeField]
+    private Color _minAvailableColor = Color.red;
+
+    /// <summary>
+    /// The color when all data is still available in the routers.
+    /// </summary>
+    [SerializeField]
+    private Color _maxAvailableColor = Color.green;
+
+    /// <summary>
     /// The sprite renderers of this object.
     /// </summary>
     [Header("Renderers")]
@@ -178,7 +190,7 @@ public class Hotspot : MonoBehaviour
         // Update the status light
         float totalTransferedData = _initialData - _availableData;
         float transferProgress = totalTransferedData / _initialData;
-        _statusLightRenderer.color = Color.Lerp(_maximumBandwidthColor, _minimumBandwidthColor, transferProgress);
+        _statusLightRenderer.color = Color.Lerp(_maxAvailableColor, _minAvailableColor, transferProgress);
 
         return transmittedData;
     }

@@ -122,11 +122,6 @@ public class Player : MonoBehaviour
     private Agent _agent;
 
     /// <summary>
-    /// Attached player renderer.
-    /// </summary>
-    private Renderer _playerRenderer = null;
-
-    /// <summary>
     /// Lists of the hotspots in range of this player.
     /// </summary>
     private List<Hotspot> _hotspotsInRange = new List<Hotspot>();
@@ -176,7 +171,6 @@ public class Player : MonoBehaviour
         // Get the needed components.
         _agent = GetComponent<Agent>();
         _dashTrail = GetComponentInChildren<DashTrail>();
-        _playerRenderer = GetComponentInChildren<Renderer>();
         _skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
         // Set floor.

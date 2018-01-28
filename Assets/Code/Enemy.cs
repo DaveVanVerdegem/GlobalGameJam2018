@@ -80,6 +80,9 @@ public class Enemy : MonoBehaviour
         // Get the needed components.
         _agent = GetComponent<Agent>();
         _angrySpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        // Set the timer high enough so the enemies immediately get a target assigned in the beginning
+        _idleTimer = _waitingTime + 1f;
     }
 
     // Update is called once per frame
@@ -156,7 +159,12 @@ public class Enemy : MonoBehaviour
         RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lookDirection, _detectionRange, _detectionMask);
 
         // Update player detection.
-        if (raycastHit.transform == Player.Instance.transform)
+        if (raycastHit.transform.CompareTag("Enemy"))
+        {
+            // If another enemy is in range, mark this target for refreshing next frame
+            _idleTarget = Vector2.zero;
+        }
+        if (raycastHit.transform.CompareTag("Player"))
         {
             AudioPlayer.Instance.AddChasingEnemy(this);
             _state = State.Chasing;
@@ -177,16 +185,23 @@ public class Enemy : MonoBehaviour
         if (Player.Instance.Dashing)
             return;
 
+        // Move towards the player
         if (Player.Instance.transform.position.x > transform.position.x)
+        {
             _agent.Move(1 * Time.deltaTime);
+        }
         else
+        {
             _agent.Move(-1 * Time.deltaTime);
+        }
 
         // Check if the enemy can catch the player.
         if (Vector2.Distance(transform.position, Player.Instance.transform.position) < _range)
-        {
             GameManager.Instance.TriggerGameOver();
-        }
+
+        // Set the next target idle position to be the current location of the Player
+        // this is to avoid a lured enemy going back
+        _idleTarget = new Vector2(Player.Instance.transform.position.x, Player.Instance.transform.position.y);
     }
 
     /// <summary>
