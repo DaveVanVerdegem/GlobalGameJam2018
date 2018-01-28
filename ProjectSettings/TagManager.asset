@@ -50,8 +50,14 @@ TagManager:
   - name: Curtains
     uniqueID: 109526717
     locked: 0
+  - name: Furniture Back
+    uniqueID: 447928769
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Furniture Front
+    uniqueID: 3269956471
     locked: 0
   - name: Shadows
     uniqueID: 4285843161
