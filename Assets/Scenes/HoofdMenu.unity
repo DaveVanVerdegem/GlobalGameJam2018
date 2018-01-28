@@ -256,12 +256,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &745921778 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1142036827650866, guid: 34215b9f88aceef4992a08f56cb41e27,
-    type: 2}
-  m_PrefabInternal: {fileID: 1010482920}
---- !u!1001 &1010482920
+--- !u!1001 &654729780
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -358,90 +353,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1864416307202558, guid: 34215b9f88aceef4992a08f56cb41e27, type: 2}
-      propertyPath: m_Name
-      value: MainMenuCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 224503551648237016, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224503551648237016, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224503551648237016, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 224503551648237016, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224761458121722810, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224761458121722810, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224761458121722810, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 224761458121722810, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224202130183552854, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224202130183552854, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224202130183552854, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 224202130183552854, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224889098414859240, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224889098414859240, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224889098414859240, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 224889098414859240, guid: 34215b9f88aceef4992a08f56cb41e27,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 34215b9f88aceef4992a08f56cb41e27, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &745921778 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1142036827650866, guid: 34215b9f88aceef4992a08f56cb41e27,
+    type: 2}
+  m_PrefabInternal: {fileID: 654729780}

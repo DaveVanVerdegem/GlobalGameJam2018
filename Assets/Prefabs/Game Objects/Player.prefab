@@ -415,15 +415,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _downloadMaterial: {fileID: 2100000, guid: 7624d611bd330e44b80ef65275598a16, type: 2}
   _interactableIcon: {fileID: 212398926061269680}
-  _dataToDownload: 100
+  _dataToDownload: 80
   _roundingMargin: 1
-  _downloadPercentage: {fileID: 0}
   _dashObstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 6144
   _dashDistance: 3
   _dashSpeed: 10
-  _dashImage: {fileID: 0}
   _noDashCooldown: 0
   _whistleSound: {fileID: 8300000, guid: 899997c2ddffab240a9716350f28cc62, type: 3}
   Floor: 4
