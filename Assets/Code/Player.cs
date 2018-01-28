@@ -286,10 +286,12 @@ public class Player : MonoBehaviour
             if (_connectedHotspot == null)
             {
                 _connectedHotspot = ReturnBestAvailableHotspot();
+                print(string.Format("Connected to network {0}!", _connectedHotspot.gameObject.name));
             }
             // Disconnect from hotspot.
             else
             {
+                print(string.Format("Disconnected from network {0}!", _connectedHotspot.gameObject.name));
                 _connectedHotspot = null;
             }
         }
