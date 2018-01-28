@@ -935,6 +935,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SignalStrengthIcon: {fileID: 114906638065327196}
+  DashImage: {fileID: 114213286836763992}
+  DownloadPercentageText: {fileID: 114257689675236850}
 --- !u!114 &114436207658966740
 MonoBehaviour:
   m_ObjectHideFlags: 1
