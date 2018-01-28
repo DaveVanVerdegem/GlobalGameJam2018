@@ -21,6 +21,12 @@ public class Agent : MonoBehaviour
     /// </summary>
     [HideInInspector]
     public bool FacingRight = true;
+
+    /// <summary>
+    /// Is this agent the player's agent?
+    /// </summary>
+    [HideInInspector]
+    public bool IsPlayerAgent = false;
     #endregion
 
     #region Fields
@@ -38,10 +44,6 @@ public class Agent : MonoBehaviour
         _skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-    }
     #endregion
 
     #region Movement
@@ -53,10 +55,13 @@ public class Agent : MonoBehaviour
     {
         transform.Translate(Vector2.right * direction * _speed);
 
-        if (Mathf.Abs(direction) > 0)
+        // For the player, only switch sides after a certain threshold is reached
+        // otherwise, releasing the joystick is enough to swap around
+        float tolerance = (IsPlayerAgent) ? 0.01f : 0f;
+        if (Mathf.Abs(direction) > tolerance)
         {
             // Have the agent face the direction it's moving in.
-            FacingRight = (direction > 0);
+            FacingRight = (direction > tolerance);
             _skeletonAnimation.transform.localScale = (FacingRight) ? Vector3.one : new Vector3(-1f, 1, 1);
         }
 

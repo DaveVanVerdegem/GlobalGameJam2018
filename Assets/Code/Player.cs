@@ -170,6 +170,8 @@ public class Player : MonoBehaviour
     {
         // Get the needed components.
         _agent = GetComponent<Agent>();
+        _agent.IsPlayerAgent = true;
+
         _dashTrail = GetComponentInChildren<DashTrail>();
         _skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
