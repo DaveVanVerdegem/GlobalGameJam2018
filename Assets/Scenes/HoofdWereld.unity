@@ -437,6 +437,10 @@ Prefab:
       propertyPath: m_Name
       value: Enemy_Slav (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1292177775747730, guid: d270495ccadd34a43b1b27156c9098d6, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1ec31f7368fc5494f8cdc487b22f395a, type: 2}
   m_IsPrefabParent: 0
