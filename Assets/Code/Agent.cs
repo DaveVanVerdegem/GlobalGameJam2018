@@ -59,7 +59,7 @@ public class Agent : MonoBehaviour
         // otherwise, releasing the joystick is enough to swap around
         // if arrowkeys are pressed instead, ignore the threshold
         bool arrowKeysPressed = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow);
-        float tolerance = (IsPlayerAgent && !arrowKeysPressed) ? 0.01f : 0f;
+        float tolerance = (IsPlayerAgent && !arrowKeysPressed) ? 0.005f : 0f;
         if (Mathf.Abs(direction) > tolerance)
         {
             // Have the agent face the direction it's moving in.
