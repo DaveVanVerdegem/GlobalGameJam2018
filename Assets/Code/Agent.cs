@@ -61,7 +61,13 @@ public class Agent : MonoBehaviour
         }
 
         // Set the right animation.
-        _skeletonAnimation.AnimationName = (Mathf.Abs(direction) > 0) ? "walk" : "idle";
+        SetAnimation((Mathf.Abs(direction) > 0) ? "walk" : "idle");
+    }
+
+    public void SetAnimation(string animationName)
+    {
+        // Set the right animation.
+        _skeletonAnimation.AnimationName = animationName;
     }
     #endregion
 }

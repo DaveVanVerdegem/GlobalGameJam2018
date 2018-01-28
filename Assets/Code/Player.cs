@@ -443,6 +443,11 @@ public class Player : MonoBehaviour
         _interactableIcon.enabled = show;
     }
 
+    public void SetAnimation(string animationName)
+    {
+        _agent.SetAnimation(animationName);
+    }
+
     #endregion
 
     #region Returns
