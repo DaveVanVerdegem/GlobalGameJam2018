@@ -60,6 +60,19 @@ public class Hotspot : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Color _maximumBandwidthColor = Color.green;
+
+    /// <summary>
+    /// The sprite renderers of this object.
+    /// </summary>
+    [Header("Renderers")]
+    [SerializeField]
+    private List<SpriteRenderer> _signalVisualRenderers = null;
+
+    /// <summary>
+    /// The renderer for the status light.
+    /// </summary>
+    [SerializeField]
+    private SpriteRenderer _statusLightRenderer = null;
     #endregion
 
     #region Static Properties
@@ -87,10 +100,11 @@ public class Hotspot : MonoBehaviour
     /// Floor that this hotspot is on.
     /// </summary>
     private int _floorLevel;
+
     /// <summary>
-    /// The sprite renderers of this object.
+    /// The initial amount of data in this hotspot.
     /// </summary>
-    private List<SpriteRenderer> _spriteRenderers = null;
+    private float _initialData;
 
     #endregion
 
@@ -102,7 +116,8 @@ public class Hotspot : MonoBehaviour
         if (!Hotspots.Contains(this))
             Hotspots.Add(this);
 
-        _spriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
+        // Save how much data was in here at the beginning
+        _initialData = _availableData;
     }
     // Use this for initialization
     private void Start()
@@ -111,20 +126,15 @@ public class Hotspot : MonoBehaviour
         _floorLevel = Level.Instance.ReturnFloorLevel(transform.position);
 
         // Visualize the pulses
-        for (int i = 0; i < _spriteRenderers.Count; ++i)
-            StartCoroutine(PulseSignal(_spriteRenderers[i], 0.3f * i));
+        for (int i = 0; i < _signalVisualRenderers.Count; ++i)
+            StartCoroutine(PulseSignal(_signalVisualRenderers[i], 0.3f * i));
 
         // Determine the color according to the bandwidth and update the spriterenderers
         if (_bandwidth < 0 || _bandwidth > 1f)
             Debug.LogWarning(string.Format("Bandwidth should be normalised! ({0})", _bandwidth));
 
         Color bandwithColor = Color.Lerp(_minimumBandwidthColor, _maximumBandwidthColor, _bandwidth);
-        _spriteRenderers.ForEach(x => x.color = bandwithColor);
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
+        _signalVisualRenderers.ForEach(x => x.color = bandwithColor);
     }
 
     private void OnDisable()
@@ -163,7 +173,12 @@ public class Hotspot : MonoBehaviour
         _availableData -= transmittedData;
 
         // Update the state of this hotspot.
-        Drained = (_availableData < 0);
+        Drained = (_availableData <= 0);
+
+        // Update the status light
+        float totalTransferedData = _initialData - _availableData;
+        float transferProgress = totalTransferedData / _initialData;
+        _statusLightRenderer.color = Color.Lerp(_maximumBandwidthColor, _minimumBandwidthColor, transferProgress);
 
         return transmittedData;
     }
@@ -252,5 +267,6 @@ public class Hotspot : MonoBehaviour
             progress = 0f;
         }
     }
+
     #endregion
 }
