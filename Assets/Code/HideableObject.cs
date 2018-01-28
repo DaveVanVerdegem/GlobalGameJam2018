@@ -61,6 +61,9 @@ public class HideableObject : MonoBehaviour
 	/// <param name="open">Set this object to open.</param>
 	public void ToggleState(bool open)
 	{
+		if (_openVisuals == null || _closedVisuals == null)
+			return;
+
 		_openVisuals.SetActive(open);
 		_closedVisuals.SetActive(!open);
 	}
