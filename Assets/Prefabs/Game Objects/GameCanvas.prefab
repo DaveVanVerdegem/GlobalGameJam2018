@@ -1010,6 +1010,7 @@ MonoBehaviour:
   _pauseMenu: {fileID: 1955607630439608}
   _gameOverPanel: {fileID: 1433514148946478}
   _winPanel: {fileID: 1263715688929656}
+  _winCry: {fileID: 8300000, guid: daf15cfa7e0ed2c4da80354c2f85cb27, type: 3}
   GameOver: 0
 --- !u!114 &114923759842533184
 MonoBehaviour:
