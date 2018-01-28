@@ -415,7 +415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _downloadMaterial: {fileID: 2100000, guid: 7624d611bd330e44b80ef65275598a16, type: 2}
   _interactableIcon: {fileID: 212398926061269680}
-  _dataToDownload: 100
+  _dataToDownload: 80
   _roundingMargin: 1
   _dashObstaclesLayerMask:
     serializedVersion: 2
