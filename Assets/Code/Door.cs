@@ -5,89 +5,98 @@ using UnityEngine.UI;
 
 public class Door : MonoBehaviour
 {
-    #region Serialized fields
+	#region Inspector Fields
+	/// <summary>
+	/// The gameobject when the door is closed.
+	/// </summary>
+	[Header("Transition")]
+	[SerializeField]
+	private GameObject _doorClosed = null;
 
-    /// <summary>
-    /// The gameobject when the door is closed.
-    /// </summary>
-    [Header("Transition")]
-    [SerializeField]
-    private GameObject _doorClosed = null;
+	/// <summary>
+	/// The gameobject when the door is open.
+	/// </summary>
+	[SerializeField]
+	private GameObject _doorOpen = null;
 
-    /// <summary>
-    /// The gameobject when the door is open.
-    /// </summary>
-    [SerializeField]
-    private GameObject _doorOpen = null;
+	[Space]
+	/// <summary>
+	/// Sound for the door.
+	/// </summary>
+	[Tooltip("Sound for the door.")]
+	[SerializeField]
+	private AudioClip _doorSound;
+	#endregion
 
-    #endregion
+	#region Fields
 
-    #region Fields
+	/// <summary>
+	/// Is this door open?
+	/// </summary>
+	private bool _isOpen = false;
 
-    /// <summary>
-    /// Is this door open?
-    /// </summary>
-    private bool _isOpen = false;
+	/// <summary>
+	/// Contains a reference to the player ONLY IF the player is present in the interaction area.
+	/// </summary>
+	private Player _player = null;
 
-    /// <summary>
-    /// Contains a reference to the player ONLY IF the player is present in the interaction area.
-    /// </summary>
-    private Player _player = null;
+	#endregion
 
-    #endregion
+	#region Life Cycle
 
-    #region Life Cycle
+	private void Update()
+	{
+		// If there is no player reference, no interaction check is needed
+		if (_player == null)
+			return;
 
-    private void Update()
-    {
-        // If there is no player reference, no interaction check is needed
-        if (_player == null)
-            return;
+		// Check if the player presses the interaction key
+		if (Input.GetButtonDown("Activate"))
+			Interact();
+	}
 
-        // Check if the player presses the interaction key
-        if (Input.GetButtonDown("Activate"))
-            Interact();
-    }
+	#endregion
 
-    #endregion
+	#region Methods
 
-    #region Methods
+	public void Interact()
+	{
+		// Play the door sound.
+		AudioPlayer.EffectsSource.PlayOneShot(_doorSound);
 
-    public void Interact()
-    {
-        // Toggle the open
-        _isOpen = !_isOpen;
+		// Toggle the open
+		_isOpen = !_isOpen;
 
-        // If the player opened the door, remove the interactable icon
-        _player.ShowInteractableIcon(this, false);
+		// If the player opened the door, remove the interactable icon
+		_player.ShowInteractableIcon(this, false);
 
-        // Toggle the collider and sprite renderer
-        _doorClosed.SetActive(!_isOpen);
-        _doorOpen.SetActive(_isOpen);
-    }
+		// Toggle the collider and sprite renderer
+		_doorClosed.SetActive(!_isOpen);
+		_doorOpen.SetActive(_isOpen);
+	}
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // Set the player reference
-        if (other.CompareTag("Player"))
-        {
-            _player = other.GetComponent<Player>();
-            _player.ShowInteractableIcon(this, false);
-        }
-    }
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		// Set the player reference
+		if (other.CompareTag("Player"))
+		{
+			_player = other.GetComponent<Player>();
+			_player.ShowInteractableIcon(this, false);
+		}
+	}
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        // Clear the player reference
-        if (other.CompareTag("Player"))
-        {
-            // Hide the interactable icon
-            _player.ShowInteractableIcon(this, false);
+	private void OnTriggerExit2D(Collider2D other)
+	{
+		// Clear the player reference
+		if (other.CompareTag("Player"))
+		{
+			// Hide the interactable icon
+			_player.ShowInteractableIcon(this, false);
 
-            // Clear the player reference
-            _player = null;
-        }
-    }
+			// Clear the player reference
+			_player = null;
+		}
+	}
 
-    #endregion
+	#endregion
 }
